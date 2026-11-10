@@ -1,0 +1,80 @@
+{
+  "name": "Outreach",
+  "type": "object",
+  "properties": {
+    "job_id": {
+      "type": "string",
+      "title": "Related job"
+    },
+    "contact_name": {
+      "type": "string",
+      "title": "Contact name"
+    },
+    "contact_title": {
+      "type": "string",
+      "title": "Contact title"
+    },
+    "platform": {
+      "type": "string",
+      "title": "Platform",
+      "enum": [
+        "LinkedIn",
+        "NYU Violet Network",
+        "Email"
+      ],
+      "enumColors": [
+        "blue",
+        "purple",
+        "gray"
+      ],
+      "default": "LinkedIn"
+    },
+    "message_draft": {
+      "type": "string",
+      "title": "Message draft"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Draft",
+        "Sent",
+        "Replied"
+      ],
+      "enumColors": [
+        "gray",
+        "blue",
+        "green"
+      ],
+      "default": "Draft"
+    },
+    "follow_up_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Follow-up date"
+    },
+    "google_event_id": {
+      "type": "string",
+      "title": "Google Calendar event id"
+    },
+    "google_synced_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Last synced to Google Calendar"
+    }
+  },
+  "required": [
+    "contact_name"
+  ],
+  "rls": {
+    "read": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "created_by_id": "{{user.id}}"
+    },
+    "delete": {
+      "created_by_id": "{{user.id}}"
+    }
+  }
+}

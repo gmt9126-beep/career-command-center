@@ -1,0 +1,64 @@
+{
+  "name": "Profile",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "Name"
+    },
+    "target_roles": {
+      "type": "array",
+      "title": "Target roles",
+      "items": {
+        "type": "string"
+      }
+    },
+    "resume_text": {
+      "type": "string",
+      "title": "Resume text"
+    },
+    "skills": {
+      "type": "array",
+      "title": "Skills",
+      "items": {
+        "type": "string"
+      }
+    },
+    "preferred_locations": {
+      "type": "array",
+      "title": "Preferred locations",
+      "items": {
+        "type": "string"
+      }
+    },
+    "preferred_industries": {
+      "type": "array",
+      "title": "Preferred industries",
+      "items": {
+        "type": "string"
+      }
+    },
+    "work_style": {
+      "type": "string",
+      "title": "Work style"
+    },
+    "other_notes": {
+      "type": "string",
+      "title": "Other notes"
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "rls": {
+    "read": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "created_by_id": "{{user.id}}"
+    },
+    "delete": {
+      "created_by_id": "{{user.id}}"
+    }
+  }
+}
