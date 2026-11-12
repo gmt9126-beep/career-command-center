@@ -8,7 +8,7 @@ A focused workspace for content design and UX design job searches: track roles o
 | --- | --- |
 | `src/`, `base44/`, config files | The Base44 app source (React, Tailwind, shadcn). See `SETUP.md` for how to run it. |
 | `claude-artifact/career-command-center.html` | A single-file rebuild of the same app that runs as a Claude artifact. |
-| `docs/index.html` | A public demo of the app with sample data, served by GitHub Pages. |
+| `docs/index.html` | A standalone version of the app, served by GitHub Pages. It starts empty and saves each visitor's data in their own browser. |
 
 ## Running each version
 
@@ -16,4 +16,4 @@ A focused workspace for content design and UX design job searches: track roles o
 
 **Claude artifact.** The HTML file is the page source for an artifact published on claude.ai. It relies on Claude for saved data, scoring and the Career Coach, so it does not work when opened on its own or hosted on GitHub Pages. It holds no personal data: roles, profile and chats live in the artifact's private database, not in this file.
 
-**Public demo.** `docs/index.html` is a standalone copy for GitHub Pages: https://gmt9126-beep.github.io/career-command-center/. It uses a fictional candidate and made-up roles, saves changes only in the visitor's browser, and has the AI features (scoring, Career Coach, outreach drafting, live role search) switched off. In the repository settings, Pages must be set to the `main` branch and the `/docs` folder.
+**Standalone site.** `docs/index.html` is the version served by GitHub Pages: https://gmt9126-beep.github.io/career-command-center/. It starts as a blank slate and saves roles, projects and profile in the visitor's browser on that device. There are no accounts and nothing syncs between devices; the Profile page can download a backup file and restore it elsewhere. The AI features (scoring, Career Coach, outreach drafting, role discovery) are not in this version because they need the Claude artifact. In the repository settings, Pages must be set to the `main` branch and the `/docs` folder.

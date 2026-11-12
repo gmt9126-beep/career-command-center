@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="Demo of Career Command Center, a job-search workspace for content and UX designers. Sample data only.">
+<meta name="description" content="Career Command Center: a job-search board for content and UX designers. Your data stays in your browser.">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
-<title>Career Command Center · Demo</title>
+<title>Career Command Center</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap">
 <style>
@@ -244,70 +244,32 @@ details.tc summary::-webkit-details-marker{display:none}details.tc summary:hover
 <div id="toast" hidden role="status"></div>
 
 <script>
-/* Demo shim: stands in for the Claude runtime so the app runs as a static page. Sample data only, saved in this browser. */
+/* Local runtime: stands in for the Claude runtime so the app runs as a static page. Everything is saved in this browser only. */
 (function(){
-  const KEY="ccc-demo-v1";
-  const d=n=>{const t=new Date();t.setDate(t.getDate()+n);return new Date(t-t.getTimezoneOffset()*6e4).toISOString().slice(0,10)};
-  const ts=n=>d(n)+"T12:00:00.000Z";
-  const SK=["Design Craft","Communication","Problem Solving","Technical Depth","Systems Thinking","Research & Synthesis","Content Strategy"];
-  const sk=(a,notes=[])=>SK.map((skill,i)=>({skill,score:a[i],note:notes[i]||""}));
-  const seed=()=>({
-   "profile/me":{name:"Alex Rivera (sample)",target_roles:["Content Designer","UX Designer"],skills:["UX writing","Content design","User research","Prototyping","Design systems","HTML/CSS"],preferred_locations:["New York","Remote (US)"],preferred_industries:["Consumer tech","Health","Developer tools"],work_style:"Hybrid",
-     resume_text:"SAMPLE RESUME — fictional candidate used for this demo.\n\nEDUCATION\nM.S. Design & Media, City University, 2027\nB.F.A. Graphic Design, 2025\n\nEXPERIENCE\nContent Design Intern, Northwind (productivity apps), Summer 2026\n- Rewrote onboarding copy for a template gallery and tested it with 8 participants\n- Documented voice and tone guidelines for in-app tips\n\nFreelance Brand Designer, 2024-2026\n- Built identity systems for three small businesses\n\nPROJECTS\nTransit wayfinding prototype, clinic intake redesign, open events map",
-     other_notes:"Open to contract-to-hire. No relocation before June."},
-   "jobs/j1":{company:"Lumen Labs",role:"Content Designer, Onboarding",location:"New York · Hybrid",status:"Recommended",fit_score:84,fit_reason:"Onboarding copy and testing match the internship work; level is early-career.",date_added:d(-1),created:ts(-1),salary:"$92,000 - $110,000",employment_type:"Full-Time",source:"LinkedIn",
-     job_description:"Own the words in our first-run experience. Partner with design and research to write, test and iterate onboarding flows.\n\nQualifications: 1-3 years in content design or UX writing; a portfolio showing shipped interface copy; comfort running lightweight usability tests.",
-     skill_scores:sk([4,4,4,2,3,4,5],["Identity systems and interface copy in portfolio.","Voice and tone guidelines written for a product team.","Tested and iterated onboarding copy.","HTML/CSS only; no product analytics experience.","Guidelines work shows early systems thinking.","Ran an 8-participant copy test.","Onboarding rewrite maps directly to this role."]),
-     skill_gaps:["One internship, against a 1-3 year ask.","No evidence of working with product analytics.","No localization experience."],
-     tailored_resume_bullets:["Rewrote onboarding copy for a template gallery and tested it with 8 participants.","Documented voice and tone guidelines for in-app tips used by the product team.","Prototyped a transit wayfinding flow, writing and structuring every screen."]},
-   "jobs/j2":{company:"Harbor Health",role:"UX Designer, Patient Tools",location:"Remote (US)",status:"Recommended",fit_score:66,fit_reason:"Clinic intake project is relevant, but the role wants shipped healthcare product work.",date_added:d(-2),created:ts(-2),employment_type:"Full-Time",source:"Company",
-     job_description:"Design intake and scheduling flows for patients and front-desk staff.\n\nQualifications: 2+ years of product design; experience with regulated domains preferred.",
-     skill_scores:sk([4,3,3,2,3,3,3]),skill_gaps:["No shipped healthcare product.","2+ years asked; profile shows early-career work.","No accessibility audit experience shown."],
-     tailored_resume_bullets:["Redesigned a clinic intake flow as a research-led portfolio project.","Tested interface copy with 8 participants and iterated on findings.","Built identity systems for three small businesses, from brief to delivery."]},
-   "jobs/j3":{company:"Fieldnote",role:"UX Writer",location:"New York",status:"Saved",fit_score:78,fit_reason:"Strong writing match; small team means broad scope.",date_added:d(-4),created:ts(-4),salary:"$85,000 - $100,000",employment_type:"Full-Time",source:"Referral",contact_name:"Jordan P.",
-     job_description:"First writer on a 12-person product team. Own interface copy, help content and release notes.",skill_scores:sk([3,4,4,2,3,3,5]),skill_gaps:["No help-center or docs writing shown.","Would be the only writer, with no senior mentor."],
-     tailored_resume_bullets:["Documented voice and tone guidelines for in-app tips.","Rewrote onboarding copy and validated it with participants.","Wrote and structured every screen of a transit wayfinding prototype."]},
-   "jobs/j4":{company:"Tessel",role:"Product Designer, Design Systems",location:"Remote (US)",status:"Saved",fit_score:0,date_added:d(-5),created:ts(-5),employment_type:"Full-Time",source:"LinkedIn",job_description:"",notes:"Not scored yet — paste the description into Career Coach.",skill_scores:[],skill_gaps:[],tailored_resume_bullets:[]},
-   "jobs/j5":{company:"Kiteline",role:"Associate Content Designer",location:"Brooklyn, NY",status:"Applied",fit_score:88,fit_reason:"Associate level, consumer product, and onboarding focus all line up.",date_added:d(-8),date_posted:d(-12),created:ts(-8),salary:"$78,000 - $90,000",employment_type:"Full-Time",source:"LinkedIn",applied_via:"Company",linkedin_dm:true,
-     job_description:"Join a three-person content design team working on a consumer travel app.",skill_scores:sk([4,4,4,3,3,4,5]),skill_gaps:["No travel or marketplace domain experience.","Limited experience writing for notifications."],
-     tailored_resume_bullets:["Rewrote onboarding copy for a template gallery and tested it with 8 participants.","Documented voice and tone guidelines for in-app tips.","Designed an open events map, including its filters and empty states."]},
-   "jobs/j6":{company:"Marlowe",role:"UX Designer",location:"New York",status:"Applied",fit_score:71,fit_reason:"Good craft match; role leans more visual than content.",date_added:d(-11),created:ts(-11),employment_type:"Full-Time",source:"Recruiter",applied_via:"Recruiter",contact_name:"Sam Ito",sent_email:true,job_description:"Design marketing and product surfaces for a media subscription.",skill_scores:sk([4,3,3,2,3,3,3]),skill_gaps:["No subscription or growth design work shown."],tailored_resume_bullets:[]},
-   "jobs/j7":{company:"Northwind",role:"Content Designer I",location:"Seattle, WA",status:"Interviewing",fit_score:91,fit_reason:"Returning intern with direct experience on the same product line.",date_added:d(-16),created:ts(-16),salary:"$96,000 - $118,000",employment_type:"Full-Time",source:"Referral",applied_via:"Referral",contact_name:"Priya N.",reply_received:true,linkedin_dm:true,sent_email:true,
-     job_description:"Write and design content for productivity apps used by millions.",skill_scores:sk([4,5,4,3,4,4,5]),skill_gaps:["Would require relocation, which the profile rules out before June."],
-     tailored_resume_bullets:["Rewrote onboarding copy for Northwind's template gallery and tested it with 8 participants.","Documented voice and tone guidelines for in-app tips.","Built identity systems for three small businesses as a freelance designer."],notes:"Second round is a portfolio review. Lead with the template gallery story."},
-   "jobs/j8":{company:"Juniper & Co",role:"Junior Product Designer",location:"New York",status:"Offer",fit_score:80,fit_reason:"Generalist junior role that values writing.",date_added:d(-24),created:ts(-24),salary:"$82,000",employment_type:"Full-Time",source:"Referral",applied_via:"Referral",reply_received:true,job_description:"Generalist designer on a small studio team.",skill_scores:sk([4,4,3,3,3,3,4]),skill_gaps:["Studio work is client-driven; less product depth."],tailored_resume_bullets:[]},
-   "jobs/j9":{company:"Octave",role:"Staff Content Designer",location:"San Francisco, CA",status:"Rejected",fit_score:34,fit_reason:"Staff-level scope is well beyond early-career experience.",date_added:d(-30),created:ts(-30),employment_type:"Full-Time",source:"LinkedIn",applied_via:"LinkedIn",job_description:"Lead content strategy across a platform organization. 8+ years required.",skill_scores:sk([3,3,3,2,2,3,3]),skill_gaps:["8+ years required.","No experience leading other writers.","No platform-scale strategy work."],tailored_resume_bullets:[]},
-   "outreach/o1":{job_id:"j5",contact_name:"Dana Whitfield",contact_title:"Content Design Lead",platform:"LinkedIn",status:"Sent",message_draft:"Hi Dana, I rewrote and tested onboarding copy during my internship and saw Kiteline is growing its content design team. Would you be open to a short chat about how the team works with research?",follow_up_date:d(2),created:ts(-7)},
-   "outreach/o2":{job_id:"j1",contact_name:"Hiring team",contact_title:"",platform:"Email",status:"Draft",message_draft:"Hello, I'm an early-career content designer with onboarding testing experience and would love to learn more about the role.",follow_up_date:d(4),created:ts(-1)},
-   "projects/p1":{name:"Transit Wayfinding Prototype",link:"",description:"A mobile prototype that helps riders find accessible routes through large stations. I wrote and structured every screen and tested it with riders.",role:"Designer and writer",tags:["UX writing","Prototyping","Research"],updated:ts(-3)},
-   "projects/p2":{name:"Clinic Intake Redesign",link:"",description:"A research-led redesign of a paper intake form into a guided digital flow. Interviews with front-desk staff shaped the question order.",role:"UX researcher and designer",tags:["Research","Forms","Health"],updated:ts(-9)},
-   "projects/p3":{name:"Open Events Map",link:"",description:"An interactive map of free neighborhood events with filters by date and type. Built in HTML and CSS.",role:"Solo designer",tags:["Maps","HTML/CSS"],updated:ts(-20)},
-   "notes/n1":{text:"Lead with the template gallery story; say the result first.",created:ts(-2)},
-   "notes/n2":{text:"Use \"I\", not \"we\", when describing the copy test.",created:ts(-2)},
-   "chats/c1":{name:"Score the Lumen Labs onboarding role",updated:ts(-1),messages:[
-     {role:"user",content:"Here is a job I want scored: Content Designer, Onboarding at Lumen Labs. Own the words in our first-run experience. 1-3 years in content design; portfolio of shipped interface copy; comfort running usability tests."},
-     {role:"assistant",content:"**Fit: 84. Apply.** Your onboarding rewrite and copy testing are exactly what this role does; the gap is years, not craft.\n\n| Skill | Score | Evidence |\n|---|---|---|\n| Content Strategy | 5 | Onboarding rewrite maps directly |\n| Design Craft | 4 | Identity systems and interface copy |\n| Research & Synthesis | 4 | 8-participant copy test |\n| Technical Depth | 2 | No product analytics |\n\n**Honest gaps**\n- One internship against a 1-3 year ask\n- No product analytics or localization experience\n\n**Next step:** apply this week, and message a content designer on the team first.",
-      tool_calls:[{name:"read_profile",status:"completed",arguments_string:"{}",results:"{\"name\":\"Alex Rivera (sample)\"}"},{name:"create_job",status:"completed",arguments_string:"{\"company\":\"Lumen Labs\",\"role\":\"Content Designer, Onboarding\",\"fit_score\":84}",results:"{\"id\":\"j1\",\"success\":true}"}]}]}
-  });
+  const KEY="ccc-local-v1";
   let store;try{store=JSON.parse(localStorage.getItem(KEY)||"null")}catch{store=null}
-  if(!store||typeof store!=="object")store=seed();
-  const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(store))}catch{}};
+  if(!store||typeof store!=="object"||Array.isArray(store))store={};
+  let saved=true;
+  const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(store));saved=true}catch{saved=false}};
   const subs=[],fire=()=>{save();subs.forEach(f=>setTimeout(f))};
   const snap=(id,v)=>({id,exists:v!==undefined,data:()=>v,metadata:{fromCache:false}});
+  const clone=v=>JSON.parse(JSON.stringify(v));
   const db={
-    doc:p=>({set:async v=>{store[p]=JSON.parse(JSON.stringify(v));fire()},update:async v=>{if(!store[p])throw{code:"not_found"};store[p]={...store[p],...JSON.parse(JSON.stringify(v))};fire()},delete:async()=>{delete store[p];fire()},
+    doc:p=>({set:async v=>{store[p]=clone(v);fire();if(!saved)throw{code:"quota_exceeded"}},update:async v=>{if(!store[p])throw{code:"not_found"};store[p]={...store[p],...clone(v)};fire();if(!saved)throw{code:"quota_exceeded"}},delete:async()=>{delete store[p];fire()},
       onSnapshot(n){const f=()=>n(snap(p.split("/").pop(),store[p]));subs.push(f);setTimeout(f);return()=>{}}}),
     collection:p=>({onSnapshot(n){const f=()=>n({docs:Object.keys(store).filter(k=>k.startsWith(p+"/")).map(k=>snap(k.slice(p.length+1),store[k])),metadata:{fromCache:false}});subs.push(f);setTimeout(f);return()=>{}}})};
-  const sample=async(turns,o)=>{await new Promise(r=>setTimeout(r,700));const text="This is a public demo, so the live Career Coach is switched off here.\n\nIn the full app I read your profile, score the role against it, save it to your board, and can run a mock interview. Open **Score the Lumen Labs onboarding role** in the list on the left to see a real readout.";o&&o.onText&&o.onText({text});return{text,truncated:false}};
-  sample.json=async()=>{throw{code:"demo"}};
-  window.__DEMO={reset(){try{localStorage.removeItem(KEY)}catch{}location.reload()},
-    roles:[["Lumen Labs","Content Designer, Onboarding","New York · Hybrid","$92,000 - $110,000","Content & UX","Onboarding copy and testing match your internship work.","Writing and research role; no coding required."],["Brightside AI","AI Conversation Designer","Remote (US)","Not listed","Content & UX","Voice and tone guideline work transfers to assistant personality design.","Focuses on dialogue and tone, not model building."],["Parallel","Product Marketing Associate","New York","$75,000 - $88,000","Marketing & Brand","Brand identity background plus product writing.","Messaging and launches; no engineering background needed."],["Cobalt Research","Research Operations Coordinator","Remote (US)","Not listed","Research & Policy","You have run participant sessions end to end.","Coordinates studies and participants rather than building tools."]].map(([company,title,location,salary,focus_area,why_fit,non_technical_note])=>({company,title,location,salary,employment_type:"Full-Time",source:"Sample data",link:"",focus_area,why_fit,non_technical_note}))};
-  window.claude={use:async n=>({db,user:{isOwner:()=>true},sample,mcp:null,assets:null})[n]??null};
+  const OK=/^(profile\/me|(jobs|outreach|projects|notes)\/[A-Za-z0-9_-]{1,80})$/;
+  window.__LOCAL={
+    erase(){try{localStorage.removeItem(KEY)}catch{}location.reload()},
+    exportText(){return JSON.stringify({app:"career-command-center",version:1,exported:new Date().toISOString(),data:store},null,2)},
+    restore(obj){const d=obj&&obj.app==="career-command-center"&&obj.data;if(!d||typeof d!=="object")throw new Error("not a backup");const next={};for(const k of Object.keys(d))if(OK.test(k)&&d[k]&&typeof d[k]==="object"&&!Array.isArray(d[k]))next[k]=d[k];store=next;save();location.reload()},
+    persists(){try{localStorage.setItem(KEY+"-t","1");localStorage.removeItem(KEY+"-t");return true}catch{return false}}};
+  window.claude={use:async n=>({db,user:{isOwner:()=>true},sample:null,mcp:null,assets:null})[n]??null};
 })();
 </script>
 <script>
 "use strict";
-const DEMO=window.__DEMO;
+const LOCAL=window.__LOCAL;
 /* ---------- constants (from src/lib/constants.js and base44/shared) ---------- */
 const JOB_STATUSES=["Recommended","Saved","Applied","Interviewing","Offer","Rejected"];
 const STATUS_META={Recommended:{hex:"#6C5CA8",soft:"hsl(262 32% 52% / 0.10)"},Saved:{hex:"#5A6472",soft:"hsl(218 12% 40% / 0.09)"},Applied:{hex:"#2F6F79",soft:"hsl(190 44% 33% / 0.10)"},Interviewing:{hex:"#BE7A2C",soft:"hsl(32 74% 46% / 0.12)"},Offer:{hex:"#2F7A5E",soft:"hsl(160 40% 33% / 0.12)"},Rejected:{hex:"#A4544F",soft:"hsl(4 44% 46% / 0.10)"}};
@@ -315,7 +277,7 @@ const OUTREACH_PLATFORMS=["LinkedIn","NYU Violet Network","Email"],OUTREACH_STAT
 const SKILL_ORDER=["Design Craft","Communication","Problem Solving","Technical Depth","Systems Thinking","Research & Synthesis","Content Strategy"];
 const WORK_STYLES=["Remote","Hybrid","On-site","Flexible"];
 const FOCUS_OPTIONS=["Any focus","Content & UX","Marketing & Brand","Program & Ops","Research & Policy","Customer & Solutions"];
-const NAV=[["board","Board","Board","dash"],["discover","Discover","Discover","compass"],["projects","Projects","Projects","folder"],["coach","Career Coach","Coach","sparkles"],["profile","Profile","Profile","user"]];
+const NAV=[["board","Board","Board","dash"],["projects","Projects","Projects","folder"],["profile","Profile","Profile","user"]];
 const STARTERS=["Here is a job I want scored: ","What should I focus on this week?","Draft outreach for my strongest open role.","Which of my roles has the best realistic shot?","Interview me for my strongest open role."];
 const EMPTY_FILTERS={keywords:"",company:"",status:"",date:"",fit:""};
 const P={dash:'<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>',
@@ -370,7 +332,7 @@ const route=()=>(location.hash||"#board").slice(1);
 const keyOf=(c,r)=>`${String(c||"").trim().toLowerCase()}|${String(r||"").trim().toLowerCase()}`;
 const sortJobs=a=>[...a].sort((x,y)=>String(y.created||y.date_added||"").localeCompare(String(x.created||x.date_added||"")));
 function toast(title,desc){const t=$("#toast");t.innerHTML=`<b>${esc(title)}</b>${desc?`<span>${esc(desc)}</span>`:""}`;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>t.hidden=true,3200)}
-function dbErr(e){toast("That didn't save",e&&e.code==="quota_exceeded"?"Storage is full. Delete some old roles, then try again.":"Check your connection and try again.")}
+function dbErr(e){toast("That didn't save",e&&e.code==="quota_exceeded"?"This browser could not save that. Storage may be full or blocked.":"Check your connection and try again.")}
 const needDb=()=>{if(S.db)return true;toast("Saved data isn't available here","Open this page in Claude while signed in.");return false};
 async function copyText(text){try{await navigator.clipboard.writeText(text);return true}catch{toast("Copy blocked","Select the text and copy manually.");return false}}
 const fitTone=v=>v>=80?"hsl(165 34% 34%)":v>=60?"hsl(32 74% 48%)":"hsl(0 62% 52%)";
@@ -435,7 +397,6 @@ const webTools=(onStep)=>[
 
 /* ---------- functions (base44/functions/*) rebuilt on Claude ---------- */
 async function addJobFromPaste(text){
-  if(DEMO)return{error:"AI scoring is switched off in this demo. Choose Enter details manually to add a role."};
   text=text.trim().slice(0,20000);
   if(!S.sample)return{error:"Career Coach isn't available in this view."};
   if(!S.profile)return{error:"Add your profile first — every role is scored against it."};
@@ -475,7 +436,6 @@ Return only one JSON object with these keys: readable (boolean), company, role, 
   return{job:{id,...payload}};
 }
 async function draftOutreach(job,background){
-  if(DEMO){await new Promise(r=>setTimeout(r,600));const o={job_id:job.id,contact_name:"Sample contact",contact_title:"Content Design Lead",platform:"LinkedIn",status:"Draft",message_draft:`Hi, I rewrote and tested onboarding copy during my internship, and the ${job.role} role at ${job.company} is close to that work. Would you be open to a 15-minute chat about how your team pairs writing with research?`,follow_up_date:today()};await S.db.doc("outreach/"+newId("o")).set({...o,created:nowIso()});return{outreach:o,common_points:["Sample output: the full app finds real overlap between your profile and the person you paste in."]}}
   background=background.trim().slice(0,8000);const profile=S.profile;
   const prompt=`You are Career Coach, writing ONE outreach message for a job seeker.
 
@@ -557,9 +517,9 @@ Your final message must be only one JSON object: {"roles":[{"company","title","l
 function drawNav(){const r=route(),on=k=>k==="board"?(r==="board"||r.startsWith("job-")):r===k;
   $("#nav").innerHTML=NAV.map(([k,l,,i])=>`<a href="#${k}" class="${on(k)?"on":""}"${on(k)?' aria-current="page"':""} aria-label="${l}">${ic(i)}<span>${l}</span></a>`).join("");
   $("#bnav").innerHTML=NAV.map(([k,,s,i])=>`<a href="#${k}" class="${on(k)?"on":""}">${ic(i)}<span class="trunc" style="max-width:100%">${s}</span></a>`).join("")}
-function banner(){return `<div class="notice" style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px"><span style="flex:1 1 260px"><strong>Demo.</strong> Sample candidate and made-up roles. Your changes stay in this browser, and the AI features are switched off.</span><button class="linkbtn" style="color:inherit;text-decoration:underline" data-act="reset-demo">Reset demo</button></div>`+(S.slow?`<div class="notice">Your saved data can't be reached yet. What you see may be out of date.</div>`:!S.db&&S.ready?`<div class="notice">Saved data isn't available in this view. Open this page in Claude while signed in.</div>`:"")}
+function banner(){return S.slow?`<div class="notice">Your saved data can't be reached yet. What you see may be out of date.</div>`:!S.db&&S.ready?`<div class="notice">Saved data isn't available in this view. Open this page in Claude while signed in.</div>`:""}
 function render(){
-  drawNav();const r=route();
+  const r=route();if(r==="discover"||r==="coach"){location.hash="board";return}drawNav();
   if(S.denied){view.innerHTML=`<div class="card" style="text-align:center;padding:40px"><h1 style="font-size:24px">This board is private</h1><p class="lead" style="margin-inline:auto">Only its owner can see the job search data here.</p></div>`;return}
   if(r==="discover")view.innerHTML=banner()+discoverView();
   else if(r==="projects")view.innerHTML=banner()+projectsView();
@@ -585,7 +545,7 @@ function filterJobs(jobs,f){const words=f.keywords.trim().toLowerCase().split(/\
 function boardView(){
   const FIELDS=[["company","Company","Notion, Google…"],["status","Status","applied, offer…"],["date","Date added","2026-11 or Nov 4"],["fit","Fit score","80, >60, 60-80"]];
   return `<div class="fade stack"><header class="head"><div><p class="eyebrow">Your search</p><h1 class="h1">Pipelines, in view</h1></div>
-  <div class="row"><a class="pill out" href="#coach">${ic("sparkles","acc")} Score a role</a><button class="pill pri" data-act="add-role">${ic("plus")} Add role</button></div></header>
+  <div class="row"><button class="pill pri" data-act="add-role">${ic("plus")} Add role</button></div></header>
   <div class="stats" id="stats"></div>
   <div id="boardWrap"><div class="filters" id="filters" hidden>
     <div class="searchbox">${ic("search")}<input class="in h8" id="f-keywords" data-f="keywords" placeholder="Search roles, companies, notes" aria-label="Search jobs" value="${esc(S.filters.keywords)}"></div>
@@ -605,10 +565,10 @@ function drawBoard(){
   if(!$("#boardBody"))return;const jobs=S.jobs;
   const scored=jobs.filter(j=>Number(j.fit_score)>0),avg=scored.length?Math.round(scored.reduce((a,j)=>a+Number(j.fit_score),0)/scored.length):"—";
   const st=(i,k,v)=>`<div class="stat"><div class="k">${ic(i)}<span>${k}</span></div><p class="v">${v}</p></div>`;
-  $("#stats").innerHTML=st("target","Roles tracked",jobs.length)+st("send","In play",jobs.filter(j=>["Applied","Interviewing","Offer"].includes(j.status)).length)+st("msgs","Outreach sent",S.outreach.filter(o=>o.status!=="Draft").length)+st("trend","Avg fit",avg);
+  $("#stats").innerHTML=st("target","Roles tracked",jobs.length)+st("send","In play",jobs.filter(j=>["Applied","Interviewing","Offer"].includes(j.status)).length)+st("msgs","Interviewing",jobs.filter(j=>j.status==="Interviewing").length)+st("trend","Avg fit",avg);
   const body=$("#boardBody"),fl=$("#filters");
   if(!S.loaded.jobs&&S.db){fl.hidden=true;$("#bulk").innerHTML="";body.innerHTML=`<div class="stats" style="grid-template-columns:repeat(3,1fr)">${[0,1,2].map(()=>`<div class="pulse" style="height:112px;border-radius:12px"></div>`).join("")}</div>`;return}
-  if(!jobs.length){fl.hidden=true;$("#bulk").innerHTML="";body.innerHTML=`<div class="empty"><p class="eyebrow" style="margin:0">Empty board</p><h2>Paste a job link to Career Coach and it lands here, scored.</h2><p class="t">You'll get a fit score, honest skill gaps, and three resume bullets drawn only from your real experience.</p><div class="row" style="justify-content:center;margin-top:24px"><a class="pill pri" href="#coach" style="padding-inline:16px">${ic("sparkles")} Open Career Coach ${ic("right")}</a><button class="pill out" data-act="add-role" style="padding-inline:16px;background:none">Paste a role</button></div></div>`;return}
+  if(!jobs.length){fl.hidden=true;$("#bulk").innerHTML="";body.innerHTML=`<div class="empty"><p class="eyebrow" style="margin:0">Empty board</p><h2>Add your first role.</h2><p class="t">Track every application in one place. Everything you add is saved on this device.</p><div class="row" style="justify-content:center;margin-top:24px"><button class="pill pri" data-act="add-role" style="padding-inline:16px">${ic("plus")} Add a role</button></div></div>`;return}
   fl.hidden=false;S.selected=S.selected.filter(id=>jobs.some(j=>j.id===id));
   const visible=filterJobs(sortJobs(jobs),S.filters),active=Object.values(S.filters).filter(v=>String(v||"").trim()).length;
   $("#shown").textContent=`${visible.length} of ${jobs.length}`;$("#fclear").hidden=!active;const fc=$("#fcount");fc.hidden=!active;fc.textContent=active;
@@ -646,18 +606,18 @@ function jobView(id){
   return `<div class="fade stack5"><a href="#board" class="row muted" style="display:inline-flex;gap:6px;font-size:12.5px;text-decoration:none">${ic("left")} Board</a>
   <header class="card"><div class="jh"><div style="min-width:0;flex:1 1 320px"><p class="lab" style="font-size:11px;letter-spacing:.16em">${esc(co)}</p><h1>${esc(ro)}</h1>
     ${j.fit_reason?`<p style="margin-top:8px;max-width:36rem;font-size:12.5px;line-height:1.6;color:hsl(220 8% 11% / .75)">${esc(j.fit_reason)}</p>`:""}
-    <div class="jmeta">${j.location?`<span>${esc(j.location)}</span>`:""}${j.date_added?`<span class="mono" style="font-size:11px">Added ${formatDate(j.date_added)}</span>`:""}${url?`<a class="post" href="${esc(url)}" target="_blank" rel="noopener">Posting ${ic("ext","s")}</a>`:""}<button class="chipbtn" data-act="interview" data-id="${esc(id)}">${ic("mic","s")} Interview me</button></div></div>
+    <div class="jmeta">${j.location?`<span>${esc(j.location)}</span>`:""}${j.date_added?`<span class="mono" style="font-size:11px">Added ${formatDate(j.date_added)}</span>`:""}${url?`<a class="post" href="${esc(url)}" target="_blank" rel="noopener">Posting ${ic("ext","s")}</a>`:""}</div></div>
     <div class="row" style="gap:12px;flex-wrap:nowrap">${Number(j.fit_score)>0?`<div style="display:flex;flex-direction:column;align-items:center">${fitRing(j.fit_score,58,4)}<span class="lab" style="margin-top:4px;font-size:9.5px;letter-spacing:.12em">fit</span></div>`:""}
       <div style="display:flex;flex-direction:column;gap:6px"><select class="sel h8" id="job-status" data-setstatus="${esc(id)}" aria-label="Status" style="margin:0;width:150px;background:${meta.soft}">${JOB_STATUSES.map(s=>`<option${s===j.status?" selected":""}>${s}</option>`).join("")}</select>
       <div style="display:flex;gap:6px"><button class="sbtn" style="flex:1" data-act="edit-job" data-id="${esc(id)}" aria-label="Edit role">${ic("pencil","s")} Edit</button><button class="sbtn muted" data-act="del-job" data-id="${esc(id)}" aria-label="Delete role">${ic("trash","s")}</button></div></div></div></div></header>
   ${rows.length?`<section class="card"><h2>Application details</h2><dl class="dl">${rows.map(([l,v])=>`<div style="min-width:0"><dt>${l}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl></section>`:""}
   <section class="card"><div class="row" style="align-items:flex-start;justify-content:space-between;gap:12px"><div><h2>Next steps</h2><p class="muted" style="margin-top:2px;font-size:12px">Get a human in the loop before you apply.</p></div>
-    <div class="row" style="gap:6px"><button class="pill out sm" style="background:none" data-act="toggle-people" aria-expanded="${!!S.ui.showPeople}">${ic("users","s")} Find people</button><button class="pill pri sm" data-act="draft-outreach" data-id="${esc(id)}">${ic("pen","s")} Draft outreach</button></div></div>
-    ${S.ui.showPeople?`<div style="margin-top:14px">${people.map(([l,d,k])=>`<div class="person" style="margin-top:8px"><div style="min-width:0;flex:1 1 220px"><p style="font-size:12.5px;font-weight:500">${l}</p><p class="muted" style="font-size:11.5px;line-height:1.6">${esc(d)}</p></div><a class="chipbtn" style="background:var(--card)" href="${esc(li(k))}" target="_blank" rel="noopener">Search LinkedIn ${ic("ext","s")}</a></div>`).join("")}<p class="muted" style="margin-top:8px;font-size:11px;line-height:1.6">Copy a profile you like, then paste it into Draft outreach.</p></div>`:""}</section>
+    <div class="row" style="gap:6px"><button class="pill out sm" style="background:none" data-act="toggle-people" aria-expanded="${!!S.ui.showPeople}">${ic("users","s")} Find people</button></div></div>
+    ${S.ui.showPeople?`<div style="margin-top:14px">${people.map(([l,d,k])=>`<div class="person" style="margin-top:8px"><div style="min-width:0;flex:1 1 220px"><p style="font-size:12.5px;font-weight:500">${l}</p><p class="muted" style="font-size:11.5px;line-height:1.6">${esc(d)}</p></div><a class="chipbtn" style="background:var(--card)" href="${esc(li(k))}" target="_blank" rel="noopener">Search LinkedIn ${ic("ext","s")}</a></div>`).join("")}<p class="muted" style="margin-top:8px;font-size:11px;line-height:1.6">Each search opens LinkedIn in a new tab.</p></div>`:""}</section>
   <div class="g5"><div>
     <section class="card"><h2>Skill fit</h2><p class="muted" style="margin-top:2px;font-size:12px">Scored against this role's requirements, 1–5.</p>
       ${sk.length?`${radar(sk)}<div class="sk" style="margin-top:4px">${sk.map(s=>{const v=Number(s.score)||0;return`<div><div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px"><p style="font-size:12.5px;font-weight:500">${esc(s.skill)}</p><span class="mono muted" style="font-size:11px">${esc(s.score)}/5</span></div><div class="skbar"><i style="width:${Math.min(5,v)/5*100}%;background:${v>=4?"hsl(165 30% 38%)":v>=3?"hsl(32 70% 50%)":"hsl(4 55% 55%)"}"></i></div>${s.note?`<p class="muted" style="margin-top:4px;font-size:11.5px;line-height:1.6">${esc(s.note)}</p>`:""}</div>`}).join("")}</div>`
-      :`<div style="margin-top:12px;border-radius:12px;background:hsl(230 8% 96% / .6);padding:16px 14px"><p class="muted" style="font-size:12.5px">Not scored yet — the radar appears here once this role has skill scores.</p><a href="#coach" class="row" style="display:inline-flex;gap:4px;margin-top:8px;font-size:12.5px;font-weight:500;text-underline-offset:4px">Score it in Career Coach ${ic("right","s")}</a></div>`}</section>
+      :`<div style="margin-top:12px;border-radius:12px;background:hsl(230 8% 96% / .6);padding:16px 14px"><p class="muted" style="font-size:12.5px">No skill scores for this role.</p></div>`}</section>
     ${(j.skill_gaps||[]).length?`<section class="card"><h2>Honest gaps</h2><ul class="gaps">${j.skill_gaps.map(g=>`<li><span>${esc(g)}</span></li>`).join("")}</ul></section>`:""}
   </div><div>
     ${bul.length?`<section class="card"><div style="display:flex;align-items:center;justify-content:space-between"><h2>Tailored bullets</h2><button class="row muted" style="gap:4px;font-size:11.5px" data-copy="${esc(bul.map(b=>"• "+b).join("\n"))}">${ic("copy","s")} Copy all</button></div><ul class="bul">${bul.map(b=>`<li><p>${esc(b)}</p><button data-copy="${esc(b)}" aria-label="Copy bullet">${ic("copy")}</button></li>`).join("")}</ul></section>`:""}
@@ -668,7 +628,7 @@ function jobView(id){
 
 /* ---------- discover ---------- */
 function discoverView(){return `<div class="fade stack"><header><p class="eyebrow" style="font-size:10.5px;margin-bottom:12px">Discover</p><h1 class="h1" style="max-width:42rem;font-size:34px;letter-spacing:-.03em">AI roles, without the engineering bar</h1><p class="lead" style="margin-top:12px;font-size:13.5px">Live search across job boards finds open roles at AI companies that don't need a technical background — then you drop the good ones straight onto your board.</p></header><div id="discBody"></div>
-  <p class="muted" style="font-size:11.5px;line-height:1.6">${DEMO?"This demo returns made-up sample roles. The full app searches live job boards.":"Suggestions are pulled from public job boards and employer pages at the moment you search — always verify the posting before applying."}</p></div>`}
+  <p class="muted" style="font-size:11.5px;line-height:1.6">Suggestions are pulled from public job boards and employer pages at the moment you search — always verify the posting before applying.</p></div>`}
 function drawDiscover(){const el=$("#discBody");if(!el)return;const D=S.disc,keys=S.jobs.map(j=>keyOf(j.company,j.role));
   const box=(h,p)=>`<div class="empty" style="padding:48px 24px"><h2 style="font-size:19px;letter-spacing:-.02em;margin-top:0">${h}</h2><p class="t" style="max-width:28rem;font-size:13px;margin-top:8px">${p}</p></div>`;
   el.innerHTML=`<div class="row"><div class="row" style="gap:6px">${FOCUS_OPTIONS.map(o=>`<button class="pill sm ${D.focus===o?"pri":"out"}" style="${D.focus===o?"":"color:var(--muted)"}" data-focus="${esc(o)}" aria-pressed="${D.focus===o}">${o}</button>`).join("")}</div>
@@ -684,7 +644,6 @@ function drawDiscover(){const el=$("#discBody");if(!el)return;const D=S.disc,key
     <button class="pill pri sm" data-addsug="${i}"${added||adding?" disabled":""}>${adding?`${ic("loader","s spin")} Adding`:added?`${ic("check","s")} On your board`:`${ic("plus","s")} Add to board`}</button></div></article>`}).join("")}</div>`}</div>`;
 }
 async function findRoles(){const D=S.disc;if(D.loading)return;
-  if(DEMO){D.loading=true;D.error="";drawDiscover();await new Promise(r=>setTimeout(r,700));D.roles=DEMO.roles;D.loading=false;drawDiscover();return}
   if(!S.sample){D.error="Role discovery isn't available in this view.";drawDiscover();return}
   if(!S.mcp){D.error="Role discovery needs live web search, which only works when this page is open in the Claude desktop app.";D.roles=D.roles||[];drawDiscover();return}
   D.loading=true;D.error="";drawDiscover();
@@ -703,9 +662,9 @@ const assetUrl=id=>/^[0-9a-f]{32}$/.test(String(id||""))?"/_blob/"+id:"";
 const initials=n=>String(n||"").split(/\s+/).filter(Boolean).slice(0,2).map(w=>w[0]?.toUpperCase()).join("");
 const domainOf=l=>{try{return new URL(l).hostname.replace(/^www\./,"")}catch{return""}};
 function projectsView(){const ps=[...S.projects].sort((a,b)=>String(b.updated||"").localeCompare(String(a.updated||"")));
-  return `<div class="fade stack"><header class="head"><div><p class="eyebrow">Projects</p><h1 class="h1">Work, kept close</h1><p class="lead" style="max-width:36rem">Your portfolio in one place — the coach reads these when it writes resume bullets and outreach.</p></div><button class="pill pri" data-act="add-project">${ic("plus")} Add project</button></header>
+  return `<div class="fade stack"><header class="head"><div><p class="eyebrow">Projects</p><h1 class="h1">Work, kept close</h1><p class="lead" style="max-width:36rem">Your portfolio in one place, with links, roles and tags.</p></div><button class="pill pri" data-act="add-project">${ic("plus")} Add project</button></header>
   ${!S.loaded.projects&&S.db?`<div><div class="pulse" style="height:240px"></div><div class="pulse" style="height:240px;margin-top:12px"></div></div>`
-  :!ps.length?`<div class="empty"><h2 style="font-size:20px;letter-spacing:-.02em;margin-top:0">No projects yet</h2><p class="t" style="max-width:28rem;font-size:13px;margin-top:8px">Add the work you want to be known for — a name, its link, two sentences, your role and three tags. The coach uses them the next time it writes bullets or a message.</p><button class="pill pri" style="margin-top:20px;padding-inline:16px" data-act="add-project">${ic("plus")} Add your first project</button></div>`
+  :!ps.length?`<div class="empty"><h2 style="font-size:20px;letter-spacing:-.02em;margin-top:0">No projects yet</h2><p class="t" style="max-width:28rem;font-size:13px;margin-top:8px">Add the work you want to be known for — a name, its link, two sentences, your role and three tags.</p><button class="pill pri" style="margin-top:20px;padding-inline:16px" data-act="add-project">${ic("plus")} Add your first project</button></div>`
   :`<div>${ps.map(p=>{const img=assetUrl(p.preview_image_uri),url=safeUrl(p.link);return`<article class="card lift proj" style="margin-top:14px;overflow:hidden">${img?`<div class="prev img"><img src="${img}" alt="${esc(p.name)} preview"></div>`:`<div class="prev"><b>${esc(initials(p.name)||"—")}</b><span class="lab trunc" style="font-size:10.5px;letter-spacing:.12em">${esc(domainOf(p.link)||"No preview")}</span></div>`}
     <div style="display:flex;min-width:0;flex:1;flex-direction:column;padding:8px"><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px"><h2 style="font-size:22px;line-height:1.375;letter-spacing:-.02em;overflow-wrap:anywhere">${esc(p.name)}</h2><button class="muted" style="padding:6px;border-radius:6px" data-act="edit-project" data-id="${esc(p.id)}" aria-label="Edit ${esc(p.name)}">${ic("pencil")}</button></div>
     ${p.description?`<p class="muted" style="margin-top:8px;font-size:13px;line-height:1.6">${esc(p.description)}</p>`:""}${p.role?`<p style="margin-top:12px;font-size:12px;color:hsl(220 8% 11% / .75)"><span class="lab">Role</span><span style="margin-left:8px">${esc(p.role)}</span></p>`:""}
@@ -717,14 +676,15 @@ function profileView(){
   if(!S.loaded.profile&&S.db)return `<div class="pulse" style="height:160px"></div>`;
   const p=S.profile||{};for(const k of["target_roles","skills","preferred_locations","preferred_industries"])S.tags[k]=[...(p[k]||[])];
   const L=(t,inner)=>`<div><span class="f" style="display:block;font-size:12px;color:var(--muted)">${t}</span>${inner}</div>`;
-  return `<div class="fade stack5"><header class="head"><div><p class="eyebrow">Source of truth</p><h1 class="h1">Profile</h1><p class="lead" style="max-width:32rem">Career Coach reads this before scoring any role. The more real detail in your resume, the sharper the bullets.</p></div><a class="pill out" href="#coach">${ic("sparkles","acc")} Ask Coach</a></header>
+  return `<div class="fade stack5"><header class="head"><div><p class="eyebrow">Source of truth</p><h1 class="h1">Profile</h1><p class="lead" style="max-width:32rem">Your targets and resume, kept alongside your board.</p></div></header>
+  <section class="card" style="padding:16px 20px"><h2 style="font-size:14px">Your data</h2><p class="muted" style="margin-top:4px;font-size:12.5px;line-height:1.6;max-width:44rem">${LOCAL.persists()?"Everything is saved in this browser on this device. It is not synced to your other devices, and clearing your browser data erases it. Download a backup to keep a copy or to move it to another device.":"This browser is blocking saved data, so your changes will be lost when you close the page. Turn off private browsing or allow site data, then reload."}</p><div class="row" style="margin-top:12px"><button type="button" class="pill out sm" data-act="backup">${ic("upload","s")} Download backup</button><button type="button" class="pill out sm" data-act="pick-restore">Restore from backup</button><button type="button" class="linkbtn" style="margin-left:auto" data-act="erase-data">Erase my data</button><input type="file" id="restoreFile" accept="application/json,.json" hidden></div></section>
   <form id="profileForm" data-form="profile" class="g5 p" novalidate><div><section class="card fs" style="padding:20px">
     <label class="f">Name<input class="in" id="pf-name" name="name" placeholder="Your name" value="${esc(p.name)}"></label>
     ${L("Target roles",tagBox("target_roles","Content Designer, UX Designer…"))}${L("Skills",tagBox("skills","UX writing, systems design…"))}${L("Preferred locations",tagBox("preferred_locations","New York, Remote (US)…"))}${L("Preferred industries",tagBox("preferred_industries","Fintech, Health, Developer tools…"))}
     <label class="f">Work style<select class="sel" id="pf-style" name="work_style"><option value="">Select</option>${WORK_STYLES.map(w=>`<option${w===p.work_style?" selected":""}>${w}</option>`).join("")}</select></label></section></div>
   <div><section class="card fs"><div><div style="display:flex;align-items:baseline;justify-content:space-between"><label class="f" for="pf-resume">Resume text</label><span class="mono muted" style="font-size:10.5px" id="pf-count">${(p.resume_text||"").length} chars</span></div>
     <textarea class="ta" id="pf-resume" name="resume_text" rows="16" style="font-size:12.5px" placeholder="Paste your full resume here — roles, dates, what you shipped, the outcomes you can actually back up.">${esc(p.resume_text)}</textarea></div>
-    <label class="f">Other notes<textarea class="ta" id="pf-notes" name="other_notes" rows="4" placeholder="Deal-breakers, comp range, timing, visa needs, anything Coach should weigh.">${esc(p.other_notes)}</textarea></label>
+    <label class="f">Other notes<textarea class="ta" id="pf-notes" name="other_notes" rows="4" placeholder="Deal-breakers, comp range, timing, visa needs, anything worth remembering.">${esc(p.other_notes)}</textarea></label>
     <div class="row" style="gap:12px;border-top:1px solid hsl(230 8% 91% / .7);padding-top:16px"><button class="btn" id="pf-save">Save profile</button><span id="pf-msg" style="font-size:12.5px" role="status"></span></div></section></div></form></div>`;
 }
 
@@ -879,7 +839,9 @@ function drawModal(){
     <div class="grid2"><label class="f">Company<input class="in" id="jf-company" data-k="company" placeholder="Notion" value="${v("company")}"></label><label class="f">Role<input class="in" id="jf-role" data-k="role" placeholder="Senior Content Designer" value="${v("role")}"></label></div>
     <div class="grid2"><label class="f">Location<input class="in" id="jf-location" data-k="location" placeholder="Remote (US)" value="${v("location")}"></label><label class="f">Status<select class="sel" id="jf-status" data-k="status">${JOB_STATUSES.map(s=>`<option${s===(f.status||"Saved")?" selected":""}>${s}</option>`).join("")}</select></label></div>
     <label class="f">Job link<input class="in" id="jf-link" data-k="link" placeholder="https://" value="${v("link")}"></label>
-    <label class="f">Job description<textarea class="ta" id="jf-jd" data-k="job_description" rows="5" placeholder="Paste the posting — or ask Career Coach to score it for you.">${v("job_description")}</textarea></label>
+    <div class="grid2"><label class="f">Fit score (0–100, optional)<input class="in" id="jf-fit" data-k="fit_score" type="number" min="0" max="100" value="${v("fit_score")}"></label><label class="f">Date applied<input class="in" id="jf-date" data-k="date_added" type="date" value="${v("date_added")}"></label></div>
+    <label class="f">Job description<textarea class="ta" id="jf-jd" data-k="job_description" rows="5" placeholder="Paste the posting.">${v("job_description")}</textarea></label>
+    <label class="f">Notes<textarea class="ta" id="jf-notes" data-k="notes" rows="3" placeholder="Contacts, salary, next steps.">${v("notes")}</textarea></label>
     ${D.error?`<p class="err">${esc(D.error)}</p>`:""}<div class="foot"><button type="button" class="btn ghost" data-act="close-dlg">Cancel</button><button class="btn"${D.busy?" disabled":""}>${D.busy?"Saving…":D.id?"Save changes":"Add to board"}</button></div></form>`}
   else if(D.type==="confirm"){h=`<h2 id="dt" style="font-size:18px">${esc(D.title)}</h2><p class="desc" style="font-size:14px">${esc(D.text)}</p><div class="foot"><button class="btn ghost" style="border:1px solid var(--border)" data-act="close-dlg">${esc(D.no||"Cancel")}</button><button class="btn danger" data-act="confirm-yes">${esc(D.yes||"Delete")}</button></div>`}
   else if(D.type==="outreach"){cls="o";const j=S.jobs.find(x=>x.id===D.jobId)||{},R=D.result;
@@ -911,8 +873,8 @@ async function analyze(){const D=S.dlg;syncDlg();const text=(D.f.text||"").trim(
 }
 async function saveJobForm(){const D=S.dlg;syncDlg();const f=D.f;if(!(f.company||"").trim()||!(f.role||"").trim()){D.error="Company and role are required.";redrawDlg();return}if(!needDb())return;
   D.busy=true;D.error="";redrawDlg();
-  const payload={company:f.company.trim(),role:f.role.trim(),location:(f.location||"").trim(),link:(f.link||"").trim(),job_description:f.job_description||"",status:f.status||"Saved"};
-  try{if(D.id)await S.db.doc("jobs/"+D.id).update(payload);else await S.db.doc("jobs/"+newId("j")).set({...payload,date_added:today(),fit_score:0,created:nowIso()});closeDlg(true);refresh()}
+  const payload={company:f.company.trim(),role:f.role.trim(),location:(f.location||"").trim(),link:(f.link||"").trim(),job_description:f.job_description||"",status:f.status||"Saved",fit_score:Math.max(0,Math.min(100,Math.round(Number(f.fit_score)||0))),notes:f.notes||""};if(/^\d{4}-\d{2}-\d{2}$/.test(f.date_added||""))payload.date_added=f.date_added;
+  try{if(D.id)await S.db.doc("jobs/"+D.id).update(payload);else await S.db.doc("jobs/"+newId("j")).set({date_added:today(),...payload,created:nowIso()});closeDlg(true);refresh()}
   catch(e){D.busy=false;D.error="Could not save this role.";redrawDlg()}
 }
 async function writeDraft(){const D=S.dlg;syncDlg();const job=S.jobs.find(j=>j.id===D.jobId);if(!job||D.busy)return;
@@ -951,7 +913,7 @@ document.addEventListener("submit",async e=>{e.preventDefault();const f=e.target
   if(kind==="job"){saveJobForm();return}
   if(kind==="note"){const i=$("#noteInput"),v=i.value.trim();if(!v||!needDb())return;i.value="";try{await S.db.doc("notes/"+newId("n")).set({text:v,created:nowIso()})}catch(err){dbErr(err)}return}
   if(kind==="profile"){const msg=$("#pf-msg"),d=Object.fromEntries(new FormData(f));
-    if(!d.name.trim()){msg.className="err";msg.textContent="Add your name so Career Coach knows whose resume it is.";return}if(!needDb())return;
+    if(!d.name.trim()){msg.className="err";msg.textContent="Add your name first.";return}if(!needDb())return;
     const btn=$("#pf-save");btn.disabled=true;btn.textContent="Saving…";
     try{await S.db.doc("profile/me").set({name:d.name.trim(),work_style:d.work_style,resume_text:d.resume_text,other_notes:d.other_notes,target_roles:S.tags.target_roles||[],skills:S.tags.skills||[],preferred_locations:S.tags.preferred_locations||[],preferred_industries:S.tags.preferred_industries||[]});
       S.ui.profileDirty=false;msg.className="acc";msg.innerHTML=`<span class="row" style="gap:4px">${ic("check")} Saved</span>`;setTimeout(()=>{if(msg.isConnected)msg.textContent=""},2200)}
@@ -970,15 +932,17 @@ document.addEventListener("click",async e=>{const t=e.target;
   const dn=t.closest("[data-delnote]");if(dn){if(needDb())S.db.doc("notes/"+dn.dataset.delnote).delete().catch(dbErr);return}
   const a=t.closest("[data-act]");if(!a)return;const id=a.dataset.id,D=S.dlg;
   switch(a.dataset.act){
-    case"reset-demo":DEMO&&DEMO.reset();break;
-    case"add-role":openDlg({type:"add"});break;
+    case"backup":{const a2=document.createElement("a");a2.href=URL.createObjectURL(new Blob([LOCAL.exportText()],{type:"application/json"}));a2.download="career-command-center-backup-"+today()+".json";document.body.appendChild(a2);a2.click();a2.remove();setTimeout(()=>URL.revokeObjectURL(a2.href),2000);toast("Backup downloaded");break}
+    case"pick-restore":$("#restoreFile")?.click();break;
+    case"erase-data":openDlg({type:"confirm",title:"Erase everything on this device?",text:"Your roles, projects and profile will be deleted from this browser. This cannot be undone.",no:"Keep my data",yes:"Erase",onYes:()=>LOCAL.erase()});break;
+    case"add-role":openDlg({type:"job",id:null,f:{status:"Saved"}});break;
     case"manual":openDlg({type:"job",id:null,f:{status:"Saved"}});break;
     case"analyze":analyze();break;
     case"close-dlg":closeDlg();break;
     case"toggle-filters":{const p=$("#fpop");p.hidden=!p.hidden;a.setAttribute("aria-expanded",!p.hidden);if(!p.hidden)$("#f-company").focus();break}
     case"clear-filters":S.filters={...EMPTY_FILTERS};document.querySelectorAll("[data-f]").forEach(i=>i.value="");drawBoard();break;
     case"clear-selected":S.selected=[];drawBoard();break;
-    case"edit-job":{const j=S.jobs.find(x=>x.id===id);if(j)openDlg({type:"job",id,f:{company:j.company,role:j.role,location:j.location||"",link:j.link||"",job_description:j.job_description||"",status:j.status}});break}
+    case"edit-job":{const j=S.jobs.find(x=>x.id===id);if(j)openDlg({type:"job",id,f:{company:j.company,role:j.role,location:j.location||"",link:j.link||"",job_description:j.job_description||"",status:j.status,fit_score:j.fit_score||"",notes:j.notes||"",date_added:j.date_added||""}});break}
     case"del-job":{const j=S.jobs.find(x=>x.id===id);if(j)openDlg({type:"confirm",title:"Remove this role?",text:`${j.role} at ${j.company} will be deleted from your board, along with its scores and bullets.`,no:"Keep it",yes:"Delete",onYes:async()=>{if(!needDb())return;try{await S.db.doc("jobs/"+id).delete();location.hash="board"}catch(err){dbErr(err)}}});break}
     case"confirm-yes":{const fn=D.onYes;closeDlg(true);fn&&fn();break}
     case"interview":{const j=S.jobs.find(x=>x.id===id);S.pendingSend=j?`Interview me for the ${j.role} role at ${j.company}.`:"Interview me.";location.hash="coach";break}
@@ -999,6 +963,8 @@ document.addEventListener("click",async e=>{const t=e.target;
 });
 document.addEventListener("change",async e=>{const t=e.target;
   if(t.id==="pj-file"){uploadPreview(t.files&&t.files[0]);return}
+  if(t.id==="restoreFile"){const file=t.files&&t.files[0];if(!file)return;let obj;try{obj=JSON.parse(await file.text());if(!(obj&&obj.app==="career-command-center"&&obj.data))throw 0}catch{toast("That file isn't a backup","Choose a file downloaded from this app.");t.value="";return}
+    openDlg({type:"confirm",title:"Replace what's on this device?",text:"Restoring this backup replaces the roles, projects and profile currently saved in this browser.",no:"Cancel",yes:"Restore",onYes:()=>{try{LOCAL.restore(obj)}catch{toast("That backup could not be restored")}}});t.value="";return}
   if(t.dataset.select){const id=t.dataset.select;S.selected=S.selected.includes(id)?S.selected.filter(x=>x!==id):[...S.selected,id];drawBoard();return}
   if(t.dataset.setstatus){const id=t.dataset.setstatus;if(!needDb())return;try{await S.db.doc("jobs/"+id).update({status:t.value})}catch(err){dbErr(err)}return}
   if("bulk" in t.dataset&&t.value){const ids=S.selected,status=t.value;if(!ids.length||!needDb())return;S.jobs=S.jobs.map(j=>ids.includes(j.id)?{...j,status}:j);S.selected=[];drawBoard();
