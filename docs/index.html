@@ -213,6 +213,20 @@ details.tc summary::-webkit-details-marker{display:none}details.tc summary:hover
 .hint{border:1px solid var(--border);border-radius:8px;background:hsl(230 8% 96% / .6);padding:10px 12px;font-size:12.5px;line-height:1.6}
 #toast{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:60;max-width:360px;border:1px solid var(--border);border-radius:10px;background:var(--bg);padding:12px 16px;box-shadow:0 10px 30px -12px hsl(240 14% 12% / .35);font-size:13px}
 #toast b{display:block;font-weight:600}#toast span{color:var(--muted);font-size:12.5px}
+.onb{max-width:600px;margin:0 auto}.onb .card{padding:28px}.onb h1{font-size:26px;line-height:1.25}
+.prog{height:4px;border-radius:99px;background:var(--secondary);overflow:hidden;margin:10px 0 24px}.prog i{display:block;height:100%;background:var(--primary);border-radius:99px;transition:width .3s}
+.terms{border:1px solid var(--border);border-radius:12px;background:hsl(230 8% 96% / .5);padding:14px 16px;font-size:12.5px;line-height:1.6}
+.terms ul{margin:6px 0 0;padding-left:18px}.terms li{margin:3px 0}.terms h3{font-size:12.5px;margin:12px 0 2px;letter-spacing:0}.terms details{margin-top:10px}.terms summary{cursor:pointer;font-weight:500}
+.agree{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.5;margin-top:16px;cursor:pointer}.agree input{margin-top:3px;width:16px;height:16px;accent-color:var(--primary);flex:none}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.onbf{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:24px}
+.g5.rvg{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.rvl{list-style:none;margin:12px 0 0;padding:0}.rvc{display:flex;gap:10px;padding:8px 0;border-top:1px solid hsl(230 8% 91% / .7)}
+.rvc .ok{color:var(--good);display:grid;margin-top:3px}.rvc .fix{color:var(--mid);display:grid;margin-top:3px}
+.rvc .t{font-size:13px;font-weight:500}.rvc .a{margin-top:2px;font-size:12.5px;line-height:1.6;color:var(--muted)}
+.gaps.rvt li::before{background:var(--muted)}
+.tagp.miss{background:hsl(32 74% 94%);color:hsl(32 74% 28%)}.tagp.have{background:var(--accent);color:var(--accent-fg)}
+@media (max-width:1023px){.g5.rvg{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:1023px){.g5,.g5.p{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:639px){
   .brand span.t,.nav a span{display:none}
@@ -258,7 +272,7 @@ details.tc summary::-webkit-details-marker{display:none}details.tc summary:hover
     doc:p=>({set:async v=>{store[p]=clone(v);fire();if(!saved)throw{code:"quota_exceeded"}},update:async v=>{if(!store[p])throw{code:"not_found"};store[p]={...store[p],...clone(v)};fire();if(!saved)throw{code:"quota_exceeded"}},delete:async()=>{delete store[p];fire()},
       onSnapshot(n){const f=()=>n(snap(p.split("/").pop(),store[p]));subs.push(f);setTimeout(f);return()=>{}}}),
     collection:p=>({onSnapshot(n){const f=()=>n({docs:Object.keys(store).filter(k=>k.startsWith(p+"/")).map(k=>snap(k.slice(p.length+1),store[k])),metadata:{fromCache:false}});subs.push(f);setTimeout(f);return()=>{}}})};
-  const OK=/^(profile\/me|(jobs|outreach|projects|notes)\/[A-Za-z0-9_-]{1,80})$/;
+  const OK=/^(profile\/me|settings\/consent|resume\/draft|(jobs|outreach|projects|notes)\/[A-Za-z0-9_-]{1,80})$/;
   window.__LOCAL={
     erase(){try{localStorage.removeItem(KEY)}catch{}location.reload()},
     exportText(){return JSON.stringify({app:"career-command-center",version:1,exported:new Date().toISOString(),data:store},null,2)},
@@ -277,7 +291,7 @@ const OUTREACH_PLATFORMS=["LinkedIn","NYU Violet Network","Email"],OUTREACH_STAT
 const SKILL_ORDER=["Design Craft","Communication","Problem Solving","Technical Depth","Systems Thinking","Research & Synthesis","Content Strategy"];
 const WORK_STYLES=["Remote","Hybrid","On-site","Flexible"];
 const FOCUS_OPTIONS=["Any focus","Content & UX","Marketing & Brand","Program & Ops","Research & Policy","Customer & Solutions"];
-const NAV=[["board","Board","Board","dash"],["projects","Projects","Projects","folder"],["profile","Profile","Profile","user"]];
+const NAV=[["board","Board","Board","dash"],["resume","Resume","Resume","file"],["profile","Profile","Profile","user"]];
 const STARTERS=["Here is a job I want scored: ","What should I focus on this week?","Draft outreach for my strongest open role.","Which of my roles has the best realistic shot?","Interview me for my strongest open role."];
 const EMPTY_FILTERS={keywords:"",company:"",status:"",date:"",fit:""};
 const P={dash:'<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>',
@@ -310,6 +324,7 @@ upload:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12
 upright:'<path d="M7 7h10v10M7 17 17 7"/>',
 wrench:'<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
 alert:'<circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/>'};
+P.file='<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v5h6M16 13H8M16 17H8M10 9H8"/>';
 const ic=(n,c="")=>`<svg class="ic ${c}" viewBox="0 0 24 24" aria-hidden="true">${P[n]}</svg>`;
 
 /* ---------- state + helpers ---------- */
@@ -519,7 +534,11 @@ function drawNav(){const r=route(),on=k=>k==="board"?(r==="board"||r.startsWith(
   $("#bnav").innerHTML=NAV.map(([k,,s,i])=>`<a href="#${k}" class="${on(k)?"on":""}">${ic(i)}<span class="trunc" style="max-width:100%">${s}</span></a>`).join("")}
 function banner(){return S.slow?`<div class="notice">Your saved data can't be reached yet. What you see may be out of date.</div>`:!S.db&&S.ready?`<div class="notice">Saved data isn't available in this view. Open this page in Claude while signed in.</div>`:""}
 function render(){
-  const r=route();if(r==="discover"||r==="coach"){location.hash="board";return}drawNav();
+  const r=route();if(r==="discover"||r==="coach"||r==="projects"){location.hash="board";return}drawNav();
+  const gate=!S.loaded.consent||!S.consent;$("#nav").hidden=gate;$("#bnav").hidden=gate;
+  if(!S.loaded.consent){view.innerHTML=`<div class="pulse" style="height:160px"></div>`;return}
+  if(!S.consent){drawOnb();return}
+  if(r==="resume"){view.innerHTML=banner()+resumeView();drawReview();return}
   if(S.denied){view.innerHTML=`<div class="card" style="text-align:center;padding:40px"><h1 style="font-size:24px">This board is private</h1><p class="lead" style="margin-inline:auto">Only its owner can see the job search data here.</p></div>`;return}
   if(r==="discover")view.innerHTML=banner()+discoverView();
   else if(r==="projects")view.innerHTML=banner()+projectsView();
@@ -530,6 +549,8 @@ function render(){
 }
 function refresh(){const r=route();
   if(r==="profile"&&S.ui.profileDirty)return;
+  if(r==="resume"&&$("#rv-resume"))return;
+  if($("#onb"))return;
   if(r==="coach"&&$("#log")){drawCoach();return}
   if((r==="board"||r==="")&&$("#boardBody")){drawBoard();return}
   if(r==="discover"&&$("#discBody")){drawDiscover();return}
@@ -674,15 +695,19 @@ function projectsView(){const ps=[...S.projects].sort((a,b)=>String(b.updated||"
 /* ---------- profile ---------- */
 function profileView(){
   if(!S.loaded.profile&&S.db)return `<div class="pulse" style="height:160px"></div>`;
-  const p=S.profile||{};for(const k of["target_roles","skills","preferred_locations","preferred_industries"])S.tags[k]=[...(p[k]||[])];
+  const p=S.profile||{};for(const k of["target_roles","skills","preferred_locations","preferred_industries","work_types"])S.tags[k]=[...(p[k]||[])];
   const L=(t,inner)=>`<div><span class="f" style="display:block;font-size:12px;color:var(--muted)">${t}</span>${inner}</div>`;
-  return `<div class="fade stack5"><header class="head"><div><p class="eyebrow">Source of truth</p><h1 class="h1">Profile</h1><p class="lead" style="max-width:32rem">Your targets and resume, kept alongside your board.</p></div></header>
-  <section class="card" style="padding:16px 20px"><h2 style="font-size:14px">Your data</h2><p class="muted" style="margin-top:4px;font-size:12.5px;line-height:1.6;max-width:44rem">${LOCAL.persists()?"Everything is saved in this browser on this device. It is not synced to your other devices, and clearing your browser data erases it. Download a backup to keep a copy or to move it to another device.":"This browser is blocking saved data, so your changes will be lost when you close the page. Turn off private browsing or allow site data, then reload."}</p><div class="row" style="margin-top:12px"><button type="button" class="pill out sm" data-act="backup">${ic("upload","s")} Download backup</button><button type="button" class="pill out sm" data-act="pick-restore">Restore from backup</button><button type="button" class="linkbtn" style="margin-left:auto" data-act="erase-data">Erase my data</button><input type="file" id="restoreFile" accept="application/json,.json" hidden></div></section>
+  return `<div class="fade stack5"><header class="head"><div><p class="eyebrow">Source of truth</p><h1 class="h1">Profile</h1><p class="lead" style="max-width:32rem">Your details and targets. Change or clear anything at any time.</p></div></header>
+  <section class="card" style="padding:16px 20px"><h2 style="font-size:14px">Your data</h2><p class="muted" style="margin-top:4px;font-size:12.5px;line-height:1.6;max-width:44rem">${LOCAL.persists()?"Everything is saved in this browser on this device. It is not synced to your other devices, and clearing your browser data erases it. Download a backup to keep a copy or to move it to another device.":"This browser is blocking saved data, so your changes will be lost when you close the page. Turn off private browsing or allow site data, then reload."}</p><div class="row" style="margin-top:12px"><button type="button" class="pill out sm" data-act="backup">${ic("upload","s")} Download backup</button><button type="button" class="pill out sm" data-act="pick-restore">Restore from backup</button><button type="button" class="linkbtn" style="margin-left:auto" data-act="view-terms">Terms</button><button type="button" class="linkbtn" data-act="erase-data">Erase my data</button><input type="file" id="restoreFile" accept="application/json,.json" hidden></div></section>
   <form id="profileForm" data-form="profile" class="g5 p" novalidate><div><section class="card fs" style="padding:20px">
-    <label class="f">Name<input class="in" id="pf-name" name="name" placeholder="Your name" value="${esc(p.name)}"></label>
+    <label class="f">Name<input class="in" id="pf-name" name="name" autocomplete="name" placeholder="Your name" value="${esc(p.name)}"></label>
+    <div class="grid2"><label class="f">Pronouns<input class="in" id="pf-pronouns" name="pronouns" placeholder="she/her, they/them…" value="${esc(p.pronouns)}"></label><label class="f">Date of birth<input class="in" id="pf-dob" name="date_of_birth" type="date" max="${today()}" value="${esc(p.date_of_birth)}"></label></div>
     ${L("Target roles",tagBox("target_roles","Content Designer, UX Designer…"))}${L("Skills",tagBox("skills","UX writing, systems design…"))}${L("Preferred locations",tagBox("preferred_locations","New York, Remote (US)…"))}${L("Preferred industries",tagBox("preferred_industries","Fintech, Health, Developer tools…"))}
-    <label class="f">Work style<select class="sel" id="pf-style" name="work_style"><option value="">Select</option>${WORK_STYLES.map(w=>`<option${w===p.work_style?" selected":""}>${w}</option>`).join("")}</select></label></section></div>
+    ${L("Types of work you're open to",chipSet())}
+    <label class="f">Work style<select class="sel" id="pf-style" name="work_style"><option value="">Select</option>${WORK_STYLES.map(w=>`<option${w===p.work_style?" selected":""}>${w}</option>`).join("")}</select></label>
+    <label class="f">Earliest start date<input class="in" id="pf-start" name="available_from" type="date" value="${esc(p.available_from)}"></label></section></div>
   <div><section class="card fs"><div><div style="display:flex;align-items:baseline;justify-content:space-between"><label class="f" for="pf-resume">Resume text</label><span class="mono muted" style="font-size:10.5px" id="pf-count">${(p.resume_text||"").length} chars</span></div>
+    <div class="row" style="margin-top:6px"><button type="button" class="pill out sm" data-act="pick-resume" data-target="pf">${ic("upload","s")} Upload resume PDF</button><span class="muted" style="font-size:12px" id="pf-resume-msg" role="status">Fills the box below so you can edit it.</span><input type="file" id="pf-resume-file" accept="application/pdf,.pdf" hidden></div>
     <textarea class="ta" id="pf-resume" name="resume_text" rows="16" style="font-size:12.5px" placeholder="Paste your full resume here — roles, dates, what you shipped, the outcomes you can actually back up.">${esc(p.resume_text)}</textarea></div>
     <label class="f">Other notes<textarea class="ta" id="pf-notes" name="other_notes" rows="4" placeholder="Deal-breakers, comp range, timing, visa needs, anything worth remembering.">${esc(p.other_notes)}</textarea></label>
     <div class="row" style="gap:12px;border-top:1px solid hsl(230 8% 91% / .7);padding-top:16px"><button class="btn" id="pf-save">Save profile</button><span id="pf-msg" style="font-size:12.5px" role="status"></span></div></section></div></form></div>`;
@@ -861,6 +886,7 @@ function drawModal(){
     <div><span class="f" style="display:block;font-size:12px;color:var(--muted)">Preview image</span>${S.assets?`<div class="row" style="margin-top:6px"><button type="button" class="sbtn" style="padding:8px 12px;font-size:12.5px;gap:6px" data-act="pick-image"${D.uploading?" disabled":""}>${D.uploading?ic("loader","spin"):ic("upload")} ${D.image?"Replace image":"Upload image"}</button>${D.image?`<button type="button" class="linkbtn" data-act="remove-image">Remove</button>`:""}</div><input type="file" id="pj-file" accept="image/*" hidden>`:`<p class="muted" style="margin-top:6px;font-size:12px">Image upload isn't available in this view.</p>`}</div>
     ${D.error?`<p class="err" style="font-size:12px">${esc(D.error)}</p>`:""}</div>
     <div class="foot" style="justify-content:space-between">${D.id?`<button type="button" class="row muted" style="gap:4px;padding:8px 10px;font-size:12.5px" data-act="del-project">${ic("trash")} ${D.armed?"Click again to delete":"Delete"}</button>`:"<span></span>"}<button type="button" class="btn" data-act="save-project"${D.busy?" disabled":""}>${D.busy?ic("loader","spin"):""} Save project</button></div>`}
+  if(D.type==="terms"){cls="w";h=`<h2 id="dt">Terms</h2><p class="desc">${S.consent?.agreed_at?`You agreed on ${longDate(S.consent.agreed_at)}. `:""}Last updated ${TERMS_DATE}.</p><div class="body terms" style="background:none;border:0;padding:0">${termsHtml()}</div><div class="foot"><button class="btn" data-act="close-dlg">Close</button></div>`}
   m.innerHTML=`<div class="ov" data-ov><div class="dlg ${cls}" role="dialog" aria-modal="true" aria-labelledby="dt">${h}${x}</div></div>`;
 }
 function redrawDlg(){syncDlg();const id=document.activeElement?.id;drawModal();if(id)document.getElementById(id)?.focus()}
@@ -893,8 +919,182 @@ async function uploadPreview(file){const D=S.dlg;if(!file||!S.assets)return;D.up
   if(S.dlg!==D)return;D.uploading=false;redrawDlg();
 }
 
+/* ---------- onboarding, terms, resume PDF reading ---------- */
+const WORK_TYPES=["Full-time","Part-time","Contract","Internship","Freelance"];
+const TERMS_VERSION=1,TERMS_DATE="November 12, 2026";
+const TERMS=[
+ ["What this site is","Career Command Center is a free tool for organizing a job search. It is offered as is, with no guarantee that it will be available, accurate or error-free. Nothing here is career, legal or financial advice."],
+ ["Where your information is kept","Everything you enter is saved in this browser on this device. It is not sent to a server, and the people who run this site cannot see it. There are no accounts, and nothing syncs between devices."],
+ ["Sensitive information","Every field is optional. Details such as your date of birth, pronouns, resume, salary notes and contacts can be sensitive, and you decide what to enter. Do not enter government ID numbers, bank or card numbers, passwords, or private details about other people."],
+ ["Shared and public devices","Anyone who uses this browser on this device can open the site and see what you saved. On a shared or public computer, erase your data from the Profile page when you finish."],
+ ["Resume files","When you upload a resume PDF, it is read inside your browser to copy its text into the resume box. The file itself is not uploaded or kept. PDFs you download are also made inside your browser."],
+ ["Resume review","The resume checks follow common guidance for applicant tracking systems. Every employer's system and recruiter is different, so the checks cannot guarantee any outcome."],
+ ["Backups","A backup you download is a plain file containing everything you entered. Store it somewhere safe and share it only with people you trust."],
+ ["Losing your data","Clearing your browser data, using private browsing, or switching browsers can remove what you saved. Download a backup if you want to keep a copy."],
+ ["Erasing your data","You can delete everything saved on this device at any time with Erase my data on the Profile page."],
+ ["Changes","These terms may be updated. If they change in a way that matters, the site will ask you to review them again."]];
+const termsHtml=()=>TERMS.map(([h,t])=>`<h3>${h}</h3><p>${t}</p>`).join("");
+function chipSet(){const v=S.tags.work_types||[];return `<div class="chips" data-chips>${WORK_TYPES.map(w=>`<button type="button" class="pill sm ${v.includes(w)?"pri":"out"}" data-wt="${w}" aria-pressed="${v.includes(w)}">${w}</button>`).join("")}</div>`}
+function syncOnb(){const O=S.onb;if(!O)return;document.querySelectorAll("#onb [data-o]").forEach(el=>{O.f[el.dataset.o]=el.value})}
+function drawOnb(){
+  if(!S.onb){const p=S.profile||{};S.onb={step:0,agree:false,f:{name:p.name||"",pronouns:p.pronouns||"",date_of_birth:p.date_of_birth||"",available_from:p.available_from||"",work_style:p.work_style||"",resume_text:p.resume_text||""}};for(const k of["target_roles","preferred_locations","skills","work_types"])S.tags[k]=[...(p[k]||[])]}
+  else syncOnb();
+  const O=S.onb,f=O.f,v=k=>esc(f[k]||""),focusId=document.activeElement?.id,TITLES=["Before you start","About you","What you're looking for","Resume and skills"];
+  const L=(t,inner)=>`<div><span style="display:block;font-size:12px;color:var(--muted)">${t}</span>${inner}</div>`;
+  const foot=O.step===0?`<button class="btn" id="onb-continue" data-act="onb-next"${O.agree?"":" disabled"}>Agree and continue</button>`
+    :`<button class="btn ghost" style="border:1px solid var(--border)" data-act="onb-back">Back</button><button class="linkbtn" style="margin-left:auto;font-size:12.5px" data-act="onb-skip"${O.busy?" disabled":""}>Skip this step</button><button class="btn" data-act="${O.step===3?"onb-finish":"onb-next"}"${O.busy?" disabled":""}>${O.step===3?(O.busy?"Saving…":"Finish setup"):"Continue"}</button>`;
+  const body=[
+   `<p class="lead" style="max-width:none">A place to track roles, review your resume against job postings, and see your search at a glance. Setup takes about two minutes, and you can skip any part of it.</p>
+    <div class="terms" style="margin-top:18px"><strong>The short version</strong><ul><li>What you enter is saved in this browser on this device. It is not sent to a server.</li><li>Some of it can be sensitive, such as your date of birth, pronouns and resume. Every field is optional.</li><li>Anyone who uses this browser can see it, so take care on shared devices.</li><li>You can erase everything at any time from the Profile page.</li></ul><details><summary>Read the full terms</summary>${termsHtml()}<p class="muted" style="margin-top:10px">Last updated ${TERMS_DATE}.</p></details></div>
+    <label class="agree" for="onb-agree"><input type="checkbox" id="onb-agree"${O.agree?" checked":""}><span>I have read these terms, and I'm comfortable entering personal information such as my date of birth, pronouns and resume on this site.</span></label>`,
+   `<p class="lead" style="max-width:none">Everything here is optional.</p><div class="fs" style="margin-top:18px"><label class="f">Name<input class="in" id="onb-name" data-o="name" autocomplete="name" placeholder="Your name" value="${v("name")}"></label>
+    <div class="grid2"><label class="f">Pronouns<input class="in" id="onb-pronouns" data-o="pronouns" list="pronounList" placeholder="she/her, they/them…" value="${v("pronouns")}"></label><label class="f">Date of birth<input class="in" id="onb-dob" data-o="date_of_birth" type="date" max="${today()}" value="${v("date_of_birth")}"></label></div></div>`,
+   `<p class="lead" style="max-width:none">Press Enter after each role or place to add it.</p><div class="fs" style="margin-top:18px">${L("Target roles",tagBox("target_roles","Content Designer, UX Designer…"))}${L("Locations",tagBox("preferred_locations","New York, Remote (US)…"))}${L("Types of work you're open to",chipSet())}
+    <div class="grid2"><label class="f">Work style<select class="sel" id="onb-style" data-o="work_style"><option value="">Select</option>${WORK_STYLES.map(w=>`<option${w===f.work_style?" selected":""}>${w}</option>`).join("")}</select></label><label class="f">Earliest start date<input class="in" id="onb-start" data-o="available_from" type="date" value="${v("available_from")}"></label></div></div>`,
+   `<p class="lead" style="max-width:none">Upload a PDF to fill in the text as a starting point, then correct anything that came out wrong.</p><div class="fs" style="margin-top:18px"><div><div class="row"><button type="button" class="pill out sm" data-act="pick-resume" data-target="onb">${ic("upload","s")} Upload resume PDF</button><span class="muted" style="font-size:12px" id="onb-resume-msg" role="status">Read in your browser. The file is not kept.</span><input type="file" id="onb-resume-file" accept="application/pdf,.pdf" hidden></div>
+    <label class="f" style="margin-top:12px">Resume text<textarea class="ta" id="onb-resume" data-o="resume_text" rows="10" style="font-size:12.5px" placeholder="Or paste your resume here.">${v("resume_text")}</textarea></label></div>${L("Skills",tagBox("skills","UX writing, research, Figma…"))}</div>`];
+  view.innerHTML=`<div id="onb" class="onb"><div class="card"><p class="eyebrow" style="margin:0">Step ${O.step+1} of 4</p><div class="prog"><i style="width:${(O.step+1)*25}%"></i></div><h1>${O.step===0?"Welcome to Career Command Center":TITLES[O.step]}</h1>${body[O.step]}<div class="onbf">${foot}</div></div><datalist id="pronounList"><option value="she/her"><option value="he/him"><option value="they/them"><option value="she/they"><option value="he/they"></datalist></div>`;
+  if(focusId)document.getElementById(focusId)?.focus();
+}
+function skipOnb(){const O=S.onb,f=O.f;
+  if(O.step===1){f.name=f.pronouns=f.date_of_birth=""}
+  if(O.step===2){S.tags.target_roles=[];S.tags.preferred_locations=[];S.tags.work_types=[];f.available_from=f.work_style=""}
+  if(O.step===3){f.resume_text="";S.tags.skills=[]}
+  document.querySelectorAll("#onb [data-o]").forEach(el=>{el.value=""});
+  if(O.step===3)finishOnb();else{O.step++;drawOnb();window.scrollTo(0,0)}
+}
+async function finishOnb(){syncOnb();const O=S.onb,f=O.f;if(O.busy)return;O.busy=true;drawOnb();
+  const p={preferred_industries:[],other_notes:"",...(S.profile||{}),name:(f.name||"").trim(),pronouns:(f.pronouns||"").trim(),date_of_birth:f.date_of_birth||"",available_from:f.available_from||"",work_style:f.work_style||"",work_types:S.tags.work_types||[],target_roles:S.tags.target_roles||[],preferred_locations:S.tags.preferred_locations||[],skills:S.tags.skills||[],resume_text:f.resume_text||""};delete p.id;
+  try{await S.db.doc("profile/me").set(p);await S.db.doc("settings/consent").set({agreed_at:nowIso(),version:TERMS_VERSION});S.onb=null;window.scrollTo(0,0)}
+  catch(e){O.busy=false;dbErr(e);drawOnb()}
+}
+async function pdfToText(file){
+  const lib=await(pdfToText.lib||(pdfToText.lib=import("./vendor/pdf.min.mjs")));lib.GlobalWorkerOptions.workerSrc="./vendor/pdf.worker.min.mjs";
+  const doc=await lib.getDocument({data:new Uint8Array(await file.arrayBuffer())}).promise,pages=[];
+  for(let i=1;i<=Math.min(doc.numPages,20);i++){const tc=await(await doc.getPage(i)).getTextContent();let out="",lastY=null;
+    for(const it of tc.items){if(typeof it.str!=="string")continue;const y=it.transform?it.transform[5]:lastY;if(lastY!==null&&Math.abs(y-lastY)>2&&out&&!out.endsWith("\n"))out+="\n";out+=it.str;if(it.hasEOL&&!out.endsWith("\n"))out+="\n";lastY=y}
+    pages.push(out.split("\n").map(l=>l.replace(/\s+/g," ").trim()).join("\n").replace(/\n{3,}/g,"\n\n").trim())}
+  return pages.filter(Boolean).join("\n\n");
+}
+async function handleResume(pre,file){
+  const say=(t,bad)=>{const m=$(`#${pre}-resume-msg`);if(m){m.textContent=t;m.className=bad?"err":"muted";m.style.fontSize="12px"}};
+  if(!file)return;
+  if(!/\.pdf$/i.test(file.name)&&file.type!=="application/pdf"){say("Choose a PDF file.",1);return}
+  if(file.size>15*1024*1024){say("That file is over 15 MB. Try a smaller PDF.",1);return}
+  say("Reading your PDF…");let text="";
+  try{text=await pdfToText(file)}catch(e){say("That PDF could not be read. Paste your resume text instead.",1);return}
+  if(text.replace(/\s/g,"").length<20){say("No text found. This PDF may be a scanned image, so paste your resume text instead.",1);return}
+  const apply=()=>{const el=$(`#${pre}-resume`);if(!el)return;el.value=text;el.dispatchEvent(new Event("input",{bubbles:true}));say(`Added the text from ${file.name}. Check it and fix anything that came out wrong.`)};
+  const ta=$(`#${pre}-resume`);if(!ta)return;
+  if(ta.value.trim()){say("");openDlg({type:"confirm",title:"Replace your resume text?",text:"The text from this PDF will replace what is in the box now.",no:"Keep current text",yes:"Replace",onYes:apply})}else apply();
+}
+
+/* ---------- resume review ---------- */
+const RV_BULLET=/^\s*[-•*–·▪◦‣]\s+/;
+const RV_VERBS=new Set("led built designed wrote created launched managed developed improved increased reduced researched tested shipped delivered defined drove owned produced partnered collaborated analyzed organized presented redesigned rewrote documented prototyped facilitated coordinated implemented streamlined mentored edited planned conducted established audited synthesized translated optimized illustrated animated directed authored crafted mapped interviewed measured grew cut won taught trained supported maintained introduced simplified standardized negotiated secured reviewed curated".split(" "));
+const RV_WEAK=/^(responsible for|helped|assisted|worked on|duties included|tasked with|participated in|in charge of)\b/i;
+const RV_STOP=new Set("the and for with you your our are will that this have has from who what their they them about into over more than such also all any can may must should would able work working team teams role roles job company experience experiences years year including include includes using use used well strong new other etc per across within while when where how its be been being is was were as at by an or of to in on a not but if we us i ability skills skill requirements qualifications responsibilities preferred required plus equal opportunity employer benefits salary apply position candidate candidates looking join help make like ensure based time full part day people world best great high highly level minimum degree related field equivalent environment status without regard race color religion gender national origin disability veteran sexual orientation identity age pay range compensation location remote hybrid office both each every through these those want need needs here there then them out up down most some many much very good both plus even just only between during before after under which whose also get have having does doing done take takes build building create creating help helps helping develop developing provide provides providing support supports supporting ensure ensuring understand understanding drive drives driving".split(" "));
+const RV_TERMS="user research|usability testing|user testing|content strategy|content design|ux writing|ux design|ui design|product design|visual design|interaction design|graphic design|motion design|brand identity|branding|design systems|design system|style guide|voice and tone|information architecture|user flows|journey mapping|wireframes|prototyping|prototypes|personas|accessibility|wcag|localization|microcopy|copywriting|editorial|typography|storytelling|conversation design|figma|sketch|adobe creative suite|photoshop|illustrator|indesign|after effects|html|css|javascript|sql|python|analytics|a/b testing|data analysis|seo|cms|content management|agile|scrum|jira|project management|stakeholders|cross-functional|presentations|workshops|interviews|surveys|generative ai|prompt design|machine learning|ai|onboarding|notifications|mobile|ios|android|web|saas|e-commerce|healthcare|fintech|marketing|social media|video|photography|art direction|illustration|research synthesis|roadmap|metrics|kpis|documentation|technical writing|help content|release notes".split("|");
+const rvEsc=s=>s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+const rvHas=(hay,term)=>{if(new RegExp("(^|[^a-z0-9])"+rvEsc(term)+"(s|es)?($|[^a-z0-9])","i").test(hay))return true;
+  if(/^[a-z]+$/.test(term)){const stem=term.replace(/(ing|ed|es|s)$/,"");if(stem.length>=5)return new RegExp("(^|[^a-z0-9])"+rvEsc(stem)+"[a-z]*($|[^a-z0-9])","i").test(hay)}return false};
+function analyzeResume(text){
+  const lines=text.split("\n").map(l=>l.trim()).filter(Boolean),words=(text.match(/[A-Za-z0-9'’+#-]+/g)||[]).length;
+  const bullets=lines.filter(l=>RV_BULLET.test(l)).map(l=>l.replace(RV_BULLET,""));
+  const noYears=l=>l.replace(/\b(19|20)\d{2}\b/g,"");
+  const measured=(bullets.length?bullets:lines).filter(l=>/\d/.test(noYears(l))).length;
+  const firstWord=l=>(l.match(/^[A-Za-z]+/)||[""])[0].toLowerCase();
+  const strong=bullets.filter(l=>RV_VERBS.has(firstWord(l))||/ed$/.test(firstWord(l))).length,weak=bullets.filter(l=>RV_WEAK.test(l));
+  const head=re=>lines.some(l=>l.length<40&&re.test(l));
+  const odd=[...new Set((text.match(/[^\x00-\x7F‘’“”–—•·…é]/g)||[]))];
+  const dense=text.split(/\n\s*\n/).map(p=>p.trim()).filter(p=>!p.includes("\n")&&!RV_BULLET.test(p)&&p.split(/\s+/).length>45).length;
+  const C=[];const add=(ok,title,advice)=>C.push({ok:!!ok,title,advice});
+  add(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i.test(text),"Email address","Put your email at the top in plain text, not inside an image or a header.");
+  add(/(\+?\d[\d\s().-]{8,}\d)/.test(text),"Phone number","Add a phone number near your name so a recruiter can reach you without opening another file.");
+  add(/linkedin\.com|https?:\/\/|www\.|\.(com|co|io|design|me)\b/i.test(text.replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+/gi,"")),"LinkedIn or portfolio link","Add your LinkedIn or portfolio address, written out in full so it survives when links are stripped.");
+  add(head(/^(work |professional |relevant )?(experience|employment|work history)\b/i),"An Experience heading","Use a plain heading such as \"Experience\". Tracking systems look for standard section names and can miss creative ones.");
+  add(head(/^education\b/i),"An Education heading","Add a section headed \"Education\" with your degree, school and year.");
+  add(head(/^(technical |core |key )?skills\b/i),"A Skills heading","Add a section headed \"Skills\" listing tools and methods by name, the way postings write them.");
+  add(words>=250&&words<=900,`Length (${words} words)`,words<250?"This is short. Most one-page resumes run 350 to 700 words, so add detail on what you did and what came of it.":"This is long. Aim for one page early in your career, two at most, and cut the oldest or least relevant lines.");
+  add(bullets.length>=5,`Bullet points (${bullets.length} found)`,"Describe each role with short bullet points starting with a dash or bullet. They are easier for both software and recruiters to scan than paragraphs.");
+  add(measured>=3,`Measurable results (${measured} lines with numbers)`,"Add numbers where you honestly can: how many, how much, how fast, how often. Aim for at least three lines with a figure.");
+  add(bullets.length>0&&strong/bullets.length>=.6&&!weak.length,"Bullets that start with action verbs",weak.length?`Rewrite bullets that open with phrases like "${weak[0].split(" ").slice(0,2).join(" ")}". Start with what you did: led, wrote, designed, tested.`:"Start most bullets with a past-tense verb such as led, wrote, designed or tested.");
+  add((text.match(/\b(19|20)\d{2}\b/g)||[]).length>=2,"Dates on your roles","Give a start and end date for each role and degree, in one consistent format such as \"Jun 2025 – Aug 2026\".");
+  add(!/(^|[\s(])(I|I'm|I’ve|I've|my|me)([\s,.)]|$)/.test(text),"No first-person pronouns","Drop \"I\", \"my\" and \"me\". Resume bullets read as \"Designed…\", not \"I designed…\".");
+  add(odd.length<=2,"Plain characters only",`Remove icons, emoji and decorative symbols (found: ${odd.slice(0,6).join(" ")}). They can turn into garbled text when a system reads the file.`);
+  add(dense===0,"No long paragraphs","Break paragraphs of more than three lines into bullets so the key points are not buried.");
+  return C;
+}
+function postingKeywords(posting){
+  const dict=RV_TERMS.filter(t=>rvHas(posting,t)),counts={};
+  (posting.toLowerCase().match(/[a-z][a-z+#-]{3,}/g)||[]).forEach(w=>{if(!RV_STOP.has(w)&&!RV_STOP.has(w.replace(/s$/,"")))counts[w]=(counts[w]||0)+1});
+  const freq=Object.entries(counts).filter(([w,n])=>n>=2&&!dict.some(t=>t.includes(w)||w.includes(t))).sort((a,b)=>b[1]-a[1]).slice(0,10).map(([w])=>w);
+  return [...new Set([...dict,...freq])].slice(0,26);
+}
+function resumeView(){
+  if(!S.loaded.draft||!S.loaded.profile)return `<div class="pulse" style="height:160px"></div>`;
+  if(!S.rv)S.rv={text:S.draft?.text??S.profile?.resume_text??"",posting:S.draft?.posting||""};
+  return `<div class="stack5"><header class="head"><div><p class="eyebrow">Resume</p><h1 class="h1">Resume review</h1><p class="lead" style="max-width:38rem">Check your resume against common applicant tracking system guidance, tailor it to a posting, then download a clean copy.</p></div></header>
+  <div class="g5 rvg"><div>
+    <section class="card"><div class="row" style="justify-content:space-between"><h2>Your resume</h2><span class="mono muted" style="font-size:10.5px" id="rv-count"></span></div>
+      <div class="row" style="margin-top:10px"><button type="button" class="pill out sm" data-act="pick-resume" data-target="rv">${ic("upload","s")} Upload resume PDF</button><button type="button" class="pill out sm" data-act="rv-from-profile">Use profile resume</button><span class="muted" style="font-size:12px" id="rv-resume-msg" role="status"></span><input type="file" id="rv-resume-file" accept="application/pdf,.pdf" hidden></div>
+      <textarea class="ta" id="rv-resume" rows="20" style="margin-top:10px;font-size:12.5px" aria-label="Resume text" placeholder="Paste your resume here, or upload a PDF. Edit it freely: this is your working copy.">${esc(S.rv.text)}</textarea>
+      <div class="row" style="margin-top:12px"><button type="button" class="pill pri sm" data-act="rv-pdf">${ic("file","s")} Download PDF</button><button type="button" class="pill out sm" data-act="rv-copy">${ic("copy","s")} Copy text</button><button type="button" class="linkbtn" style="margin-left:auto" data-act="rv-save-profile">Save to profile</button></div>
+      <p class="muted" style="margin-top:8px;font-size:11.5px;line-height:1.6">The PDF is a plain, single-column layout made from this text. Your working copy saves on this device as you type.</p></section>
+    <section class="card"><h2>Job posting</h2><p class="muted" style="margin-top:2px;font-size:12px">Paste a posting to see which of its terms your resume already uses.</p><textarea class="ta" id="rv-posting" rows="8" style="margin-top:10px;font-size:12.5px" aria-label="Job posting text" placeholder="Paste the full job description here.">${esc(S.rv.posting)}</textarea></section>
+  </div><div id="rv-results" aria-live="polite"></div></div></div>`;
+}
+function drawReview(){const el=$("#rv-results");if(!el||!S.rv)return;const text=S.rv.text||"",posting=S.rv.posting||"";
+  const cnt=$("#rv-count");if(cnt)cnt.textContent=`${(text.match(/[A-Za-z0-9'’+#-]+/g)||[]).length} words`;
+  const row=c=>`<li class="rvc"><span class="${c.ok?"ok":"fix"}">${ic(c.ok?"check":"alert")}</span><div><p class="t">${esc(c.title)}</p>${c.ok?"":`<p class="a">${esc(c.advice)}</p>`}</div></li>`;
+  let checks="";
+  if(text.trim().length<40)checks=`<p class="muted" style="margin-top:10px;font-size:12.5px;line-height:1.6">Add your resume on the left and the checks appear here.</p>`;
+  else{const C=analyzeResume(text),pass=C.filter(c=>c.ok).length,todo=C.filter(c=>!c.ok);
+    checks=`<p style="margin-top:6px;font-size:13px"><strong>${pass} of ${C.length}</strong> checks passed${todo.length?`. Fix the ${todo.length===1?"one":todo.length} below first.`:"."}</p><ul class="rvl">${todo.map(row).join("")}${C.filter(c=>c.ok).map(row).join("")}</ul>`}
+  let match;
+  if(posting.trim().length<80)match=`<p class="muted" style="margin-top:10px;font-size:12.5px;line-height:1.6">Paste a job posting on the left to compare its wording with your resume.</p>`;
+  else{const K=postingKeywords(posting),have=K.filter(k=>rvHas(text,k)),miss=K.filter(k=>!rvHas(text,k));
+    match=!K.length?`<p class="muted" style="margin-top:10px;font-size:12.5px">No clear skill terms were found in that posting. Paste the full description, including requirements.</p>`
+    :`<p style="margin-top:6px;font-size:13px"><strong>${have.length} of ${K.length}</strong> terms from the posting appear in your resume.</p>
+      ${miss.length?`<p class="lab" style="margin-top:14px">Missing from your resume</p><div class="chips">${miss.map(k=>`<span class="tagp miss">${esc(k)}</span>`).join("")}</div><p class="muted" style="margin-top:8px;font-size:12px;line-height:1.6">Edit your resume on the left to work these in, using the posting's exact wording, only where they describe work you have really done. This list updates as you type.</p>`:`<p class="muted" style="margin-top:8px;font-size:12px">Your resume already uses every term found.</p>`}
+      ${have.length?`<p class="lab" style="margin-top:14px">Already in your resume</p><div class="chips">${have.map(k=>`<span class="tagp have">${esc(k)}</span>`).join("")}</div>`:""}`}
+  el.innerHTML=`<section class="card"><h2>ATS check</h2>${checks}</section>
+  <section class="card"><h2>Match to the posting</h2>${match}</section>
+  <section class="card"><h2>What these checks can't see</h2><ul class="gaps rvt" style="margin-top:10px"><li><span>Use one column. Tables, text boxes and sidebars are often read out of order.</span></li><li><span>Keep contact details in the body, not in the page header or footer.</span></li><li><span>Use a common font and real text. Anything inside an image is invisible to the software.</span></li><li><span>Send the file type the posting asks for, with a clear name such as Firstname-Lastname-Resume.pdf.</span></li></ul>
+  <p class="muted" style="margin-top:12px;font-size:11.5px;line-height:1.6">These checks follow common guidance for applicant tracking systems. Every employer's system and recruiter is different, so passing them cannot guarantee an interview.</p></section>`;
+}
+function queueReview(){clearTimeout(queueReview.t);queueReview.t=setTimeout(()=>{drawReview();if(S.db&&S.rv)S.db.doc("resume/draft").set({text:S.rv.text,posting:S.rv.posting,updated:nowIso()}).catch(dbErr)},350)}
+function loadScript(src){return new Promise((res,rej)=>{const s=document.createElement("script");s.src=src;s.onload=res;s.onerror=rej;document.head.appendChild(s)})}
+async function resumePdfBytes(text){
+  if(!window.PDFLib)await loadScript("./vendor/pdf-lib.min.js");
+  const {PDFDocument,StandardFonts,rgb}=window.PDFLib,doc=await PDFDocument.create(),reg=await doc.embedFont(StandardFonts.Helvetica),bold=await doc.embedFont(StandardFonts.HelveticaBold);
+  const clean=s=>[...s.replace(/\t/g," ").replace(/[▪◦‣·]/g,"•").replace(/[‐‑]/g,"-")].filter(ch=>{try{reg.encodeText(ch);return true}catch{return false}}).join("");
+  const W=612,H=792,M=54,maxW=W-2*M,ink=rgb(.1,.1,.12);let page=doc.addPage([W,H]),y=H-M;
+  const lines=text.split("\n").map(l=>clean(l).replace(/\s+$/,""));const firstIdx=lines.findIndex(l=>l.trim());
+  doc.setTitle((lines[firstIdx]||"Resume").trim().slice(0,80)+" – Resume");
+  const wrap=(t,font,size,width)=>{const out=[];let cur="";for(const w of t.split(/\s+/).filter(Boolean)){const next=cur?cur+" "+w:w;if(font.widthOfTextAtSize(next,size)<=width||!cur)cur=next;else{out.push(cur);cur=w}}if(cur)out.push(cur);return out.length?out:[""]};
+  const put=(t,font,size,x,lead,bullet)=>{if(y-lead<M){page=doc.addPage([W,H]);y=H-M}y-=lead;if(bullet)page.drawText("•",{x:M+3,y,size,font,color:ink});page.drawText(t,{x,y,size,font,color:ink})};
+  lines.forEach((raw,i)=>{const l=raw.trim();
+    if(!l){y-=6;return}
+    if(i===firstIdx){wrap(l,bold,18,maxW).forEach(t=>put(t,bold,18,M,22));y-=2;return}
+    const heading=l.length<40&&!RV_BULLET.test(l)&&(/^[A-Z][A-Z &/,-]{2,}$/.test(l)||/^(work |professional |relevant )?(experience|education|skills|projects|summary|profile|awards|certifications|volunteer|leadership|publications|employment|work history)( &| and)?[a-z ]*:?$/i.test(l));
+    if(heading){y-=6;put(l.replace(/:$/,"").toUpperCase(),bold,10.5,M,15);const ly=y-3;page.drawLine({start:{x:M,y:ly},end:{x:W-M,y:ly},thickness:.5,color:rgb(.75,.75,.78)});y-=4;return}
+    if(RV_BULLET.test(raw)){const body=l.replace(RV_BULLET,"");wrap(body,reg,10.5,maxW-14).forEach((t,k)=>put(t,reg,10.5,M+14,14,k===0));return}
+    wrap(l,reg,10.5,maxW).forEach(t=>put(t,reg,10.5,M,14));
+  });
+  return doc.save();
+}
+async function downloadResumePdf(btn){const text=(S.rv?.text||"").trim();if(text.length<40){toast("Add your resume first","There is nothing to put in the PDF yet.");return}
+  const old=btn.innerHTML;btn.disabled=true;btn.innerHTML=`${ic("loader","s spin")} Making PDF`;
+  try{const bytes=await resumePdfBytes(text),name=(text.split("\n").find(l=>l.trim())||"Resume").trim().replace(/[^A-Za-z0-9 -]/g,"").trim().replace(/\s+/g,"-").slice(0,40)||"Resume";
+    const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([bytes],{type:"application/pdf"}));a.download=`${name}-Resume.pdf`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);toast("PDF downloaded")}
+  catch(e){toast("The PDF could not be made","Copy the text instead, or try again.")}
+  btn.disabled=false;btn.innerHTML=old;
+}
+
 /* ---------- events ---------- */
 document.addEventListener("input",e=>{const t=e.target;
+  if(t.id==="rv-resume"||t.id==="rv-posting"){if(S.rv){S.rv.text=$("#rv-resume").value;S.rv.posting=$("#rv-posting").value;queueReview()}return}
   if(t.dataset.f){S.filters={...S.filters,[t.dataset.f]:t.value};drawBoard();return}
   if(t.closest("#profileForm")){S.ui.profileDirty=true;if(t.id==="pf-resume")$("#pf-count").textContent=`${t.value.length} chars`;return}
   if(t.id==="coachInput"){$("#sendBtn").disabled=!t.value.trim()||!!S.run;t.style.height="auto";t.style.height=Math.min(128,t.scrollHeight)+"px";return}
@@ -913,9 +1113,9 @@ document.addEventListener("submit",async e=>{e.preventDefault();const f=e.target
   if(kind==="job"){saveJobForm();return}
   if(kind==="note"){const i=$("#noteInput"),v=i.value.trim();if(!v||!needDb())return;i.value="";try{await S.db.doc("notes/"+newId("n")).set({text:v,created:nowIso()})}catch(err){dbErr(err)}return}
   if(kind==="profile"){const msg=$("#pf-msg"),d=Object.fromEntries(new FormData(f));
-    if(!d.name.trim()){msg.className="err";msg.textContent="Add your name first.";return}if(!needDb())return;
+    if(!needDb())return;
     const btn=$("#pf-save");btn.disabled=true;btn.textContent="Saving…";
-    try{await S.db.doc("profile/me").set({name:d.name.trim(),work_style:d.work_style,resume_text:d.resume_text,other_notes:d.other_notes,target_roles:S.tags.target_roles||[],skills:S.tags.skills||[],preferred_locations:S.tags.preferred_locations||[],preferred_industries:S.tags.preferred_industries||[]});
+    try{await S.db.doc("profile/me").set({name:d.name.trim(),pronouns:(d.pronouns||"").trim(),date_of_birth:d.date_of_birth||"",available_from:d.available_from||"",work_types:S.tags.work_types||[],work_style:d.work_style,resume_text:d.resume_text,other_notes:d.other_notes,target_roles:S.tags.target_roles||[],skills:S.tags.skills||[],preferred_locations:S.tags.preferred_locations||[],preferred_industries:S.tags.preferred_industries||[]});
       S.ui.profileDirty=false;msg.className="acc";msg.innerHTML=`<span class="row" style="gap:4px">${ic("check")} Saved</span>`;setTimeout(()=>{if(msg.isConnected)msg.textContent=""},2200)}
     catch(err){msg.className="err";msg.textContent="Could not save your profile."}
     btn.disabled=false;btn.textContent="Save profile"}
@@ -930,11 +1130,24 @@ document.addEventListener("click",async e=>{const t=e.target;
   const fo=t.closest("[data-focus]");if(fo){S.disc.focus=fo.dataset.focus;drawDiscover();return}
   const sg=t.closest("[data-addsug]");if(sg){addSuggestion(S.disc.roles[+sg.dataset.addsug]);return}
   const dn=t.closest("[data-delnote]");if(dn){if(needDb())S.db.doc("notes/"+dn.dataset.delnote).delete().catch(dbErr);return}
+  const wt=t.closest("[data-wt]");if(wt){const w=wt.dataset.wt,cur=S.tags.work_types||[];S.tags.work_types=cur.includes(w)?cur.filter(x=>x!==w):[...cur,w];const inProfile=!!wt.closest("#profileForm");wt.closest("[data-chips]").outerHTML=chipSet();if(inProfile)S.ui.profileDirty=true;document.querySelector(`[data-wt="${w}"]`)?.focus();return}
   const a=t.closest("[data-act]");if(!a)return;const id=a.dataset.id,D=S.dlg;
   switch(a.dataset.act){
+    case"onb-next":syncOnb();if(S.onb.step===0&&!S.onb.agree)break;S.onb.step++;drawOnb();window.scrollTo(0,0);break;
+    case"onb-back":syncOnb();S.onb.step--;drawOnb();window.scrollTo(0,0);break;
+    case"onb-skip":skipOnb();break;
+    case"onb-finish":finishOnb();break;
+    case"pick-resume":$(`#${a.dataset.target}-resume-file`)?.click();break;
+    case"view-terms":openDlg({type:"terms"});break;
+    case"rv-pdf":downloadResumePdf(a);break;
+    case"rv-copy":if(await copyText(S.rv?.text||""))toast("Resume text copied");break;
+    case"rv-save-profile":if(!needDb())break;try{await S.db.doc("profile/me").set({...(S.profile||{}),resume_text:S.rv.text});toast("Saved to your profile")}catch(err){dbErr(err)}break;
+    case"rv-from-profile":{const pt=S.profile?.resume_text||"";if(!pt.trim()){toast("Your profile has no resume yet","Add one here, then choose Save to profile.");break}
+      const use=()=>{const el=$("#rv-resume");if(el){el.value=pt;el.dispatchEvent(new Event("input",{bubbles:true}))}};
+      if(S.rv.text.trim()&&S.rv.text!==pt)openDlg({type:"confirm",title:"Replace your working copy?",text:"The resume saved in your profile will replace the text in the box.",no:"Keep working copy",yes:"Replace",onYes:use});else use();break}
     case"backup":{const a2=document.createElement("a");a2.href=URL.createObjectURL(new Blob([LOCAL.exportText()],{type:"application/json"}));a2.download="career-command-center-backup-"+today()+".json";document.body.appendChild(a2);a2.click();a2.remove();setTimeout(()=>URL.revokeObjectURL(a2.href),2000);toast("Backup downloaded");break}
     case"pick-restore":$("#restoreFile")?.click();break;
-    case"erase-data":openDlg({type:"confirm",title:"Erase everything on this device?",text:"Your roles, projects and profile will be deleted from this browser. This cannot be undone.",no:"Keep my data",yes:"Erase",onYes:()=>LOCAL.erase()});break;
+    case"erase-data":openDlg({type:"confirm",title:"Erase everything on this device?",text:"Your roles, resume and profile will be deleted from this browser. This cannot be undone.",no:"Keep my data",yes:"Erase",onYes:()=>LOCAL.erase()});break;
     case"add-role":openDlg({type:"job",id:null,f:{status:"Saved"}});break;
     case"manual":openDlg({type:"job",id:null,f:{status:"Saved"}});break;
     case"analyze":analyze();break;
@@ -963,8 +1176,10 @@ document.addEventListener("click",async e=>{const t=e.target;
 });
 document.addEventListener("change",async e=>{const t=e.target;
   if(t.id==="pj-file"){uploadPreview(t.files&&t.files[0]);return}
+  if(t.id==="onb-agree"){S.onb.agree=t.checked;$("#onb-continue").disabled=!t.checked;return}
+  if(/^(onb|pf|rv)-resume-file$/.test(t.id)){const file=t.files&&t.files[0];t.value="";handleResume(t.id.split("-")[0],file);return}
   if(t.id==="restoreFile"){const file=t.files&&t.files[0];if(!file)return;let obj;try{obj=JSON.parse(await file.text());if(!(obj&&obj.app==="career-command-center"&&obj.data))throw 0}catch{toast("That file isn't a backup","Choose a file downloaded from this app.");t.value="";return}
-    openDlg({type:"confirm",title:"Replace what's on this device?",text:"Restoring this backup replaces the roles, projects and profile currently saved in this browser.",no:"Cancel",yes:"Restore",onYes:()=>{try{LOCAL.restore(obj)}catch{toast("That backup could not be restored")}}});t.value="";return}
+    openDlg({type:"confirm",title:"Replace what's on this device?",text:"Restoring this backup replaces the roles, resume and profile currently saved in this browser.",no:"Cancel",yes:"Restore",onYes:()=>{try{LOCAL.restore(obj)}catch{toast("That backup could not be restored")}}});t.value="";return}
   if(t.dataset.select){const id=t.dataset.select;S.selected=S.selected.includes(id)?S.selected.filter(x=>x!==id):[...S.selected,id];drawBoard();return}
   if(t.dataset.setstatus){const id=t.dataset.setstatus;if(!needDb())return;try{await S.db.doc("jobs/"+id).update({status:t.value})}catch(err){dbErr(err)}return}
   if("bulk" in t.dataset&&t.value){const ids=S.selected,status=t.value;if(!ids.length||!needDb())return;S.jobs=S.jobs.map(j=>ids.includes(j.id)?{...j,status}:j);S.selected=[];drawBoard();
@@ -989,7 +1204,9 @@ async function boot(){
   const seen=m=>{if(!m.fromCache){clearTimeout(slow);if(S.slow){S.slow=false;render()}}};
   const fail=()=>{clearTimeout(slow);S.slow=true;render()};
   const coll=(name,key,after)=>db.collection(name).onSnapshot(s=>{seen(s.metadata);S[key]=s.docs.map(d=>({id:d.id,...d.data()}));S.loaded[key]=true;after?after():refresh()},fail);
-  db.doc("profile/me").onSnapshot(s=>{seen(s.metadata);S.profile=s.exists?s.data():null;S.loaded.profile=true;if(route()==="profile")refresh()},fail);
+  db.doc("profile/me").onSnapshot(s=>{seen(s.metadata);S.profile=s.exists?s.data():null;S.loaded.profile=true;if(route()==="profile")refresh();if(route()==="resume"&&!$("#rv-resume"))render()},fail);
+  db.doc("settings/consent").onSnapshot(s=>{seen(s.metadata);S.consent=s.exists?s.data():null;S.loaded.consent=true;render()},fail);
+  db.doc("resume/draft").onSnapshot(s=>{seen(s.metadata);S.draft=s.exists?s.data():null;S.loaded.draft=true;if(route()==="resume"&&!$("#rv-resume"))render()},fail);
   coll("jobs","jobs");coll("outreach","outreach",()=>drawBoard());coll("projects","projects",()=>{if(route()==="projects")render()});
   coll("notes","notes",()=>drawNotes());
   coll("chats","chats",()=>{if(!S.run&&S.convId){const c=S.chats.find(x=>x.id===S.convId);if(c)S.msgs=[...(c.messages||[])]}if(route()==="coach"&&!S.run)drawCoach()});
